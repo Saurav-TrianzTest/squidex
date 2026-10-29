@@ -6,6 +6,7 @@
  */
 
 import { of, onErrorResumeNextWith, throwError } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { TestValues } from 'src/app/shared/state/_test-helpers';
 import { IMock, It, Mock, Times } from 'typemoq';
 import { DialogService, PlanChangedDto, PlanDto, PlansDto, versioned } from '@app/shared';
@@ -127,7 +128,7 @@ describe('TeamPlansState', () => {
         it('should redirect if returning url', () => {
             plansState.window = <any>{ location: {} };
 
-            const result = { redirectUri: 'http://url' };
+            const result = { redirectUri: environment.redirectUrl || 'http://url' };
 
             plansService.setup(x => x.putPlan(team, It.isAny(), version))
                 .returns(() => of(versioned(newVersion, new PlanChangedDto(result))));

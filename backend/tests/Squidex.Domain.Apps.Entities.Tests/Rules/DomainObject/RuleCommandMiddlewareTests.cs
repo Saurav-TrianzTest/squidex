@@ -52,7 +52,7 @@ public class RuleCommandMiddlewareTests : HandlerTestBase<Rule>
             await HandleAsync(new EnableRule(),
                 rule);
 
-        Assert.Same(rule, context.Result<EnrichedRule>());
+        Assert.Same(rule, await context.ResultAsync<EnrichedRule>());
 
         A.CallTo(() => ruleEnricher.EnrichAsync(A<EnrichedRule>._, ApiContext, A<CancellationToken>._))
             .MustNotHaveHappened();
@@ -72,7 +72,7 @@ public class RuleCommandMiddlewareTests : HandlerTestBase<Rule>
             await HandleAsync(new EnableRule(),
                 rule);
 
-        Assert.Same(enriched, context.Result<EnrichedRule>());
+        Assert.Same(enriched, await context.ResultAsync<EnrichedRule>());
     }
 
     private Task<CommandContext> HandleAsync(RuleCommand command, object actual)

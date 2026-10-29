@@ -10,6 +10,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, AssetDto, AssetFolderDto, AssetFoldersDto, AssetsDto, AssetsService, DateTime, ErrorDto, MathHelper, Resource, sanitize, ScriptCompletions, VersionTag } from '@app/shared/internal';
 import { AnnotateAssetDto, AssetMetaDto, CreateAssetFolderDto, MoveAssetDto, MoveAssetFolderDto, RenameAssetFolderDto, RenameTagDto, ResourceLinkDto } from './../model';
+import { environment } from 'src/environments/environment';
 
 describe('AssetsService', () => {
     const version = new VersionTag('1');
@@ -21,7 +22,7 @@ describe('AssetsService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 AssetsService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

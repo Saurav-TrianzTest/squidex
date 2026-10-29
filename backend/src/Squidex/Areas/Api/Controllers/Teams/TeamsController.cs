@@ -199,7 +199,7 @@ public sealed class TeamsController(ICommandBus commandBus, IAppProvider appProv
     {
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<Team>();
+        var result = await context.ResultAsync<Team>();
         var response = converter(result);
 
         return response;

@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
     <PackageReference Include="ModelContextProtocol.Core" Version="2.3.0" />
     <PackageReference Include="NSwag.Core" Version="14.6.3" />
+    <PackageReference Include="Polly" Version="8.9.0" />
     <PackageReference Include="Squidex.Assets" Version="8.0.6" />
     <PackageReference Include="Squidex.Assets.ImageSharp" Version="8.0.6" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />

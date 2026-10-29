@@ -24,7 +24,7 @@ public sealed class DoubleLinkedContentMiddleware(IContentLoader contentLoader) 
         if (context.Command is UpdateContent update && context.IsCompleted && update.SchemaId.Name == "source")
         {
             // After a change is made, the content is put to the command context.
-            var content = context.Result<Content>();
+            var content = await context.ResultAsync<Content>();
 
             var contentPrevious =
                 await contentLoader.GetAsync(

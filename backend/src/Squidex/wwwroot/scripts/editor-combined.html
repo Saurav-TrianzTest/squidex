@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 
     <!-- Load the editor sdk from the local folder or https://cloud.squidex.io/scripts/editor-sdk.js -->
     <script src="editor-sdk.js"></script>
@@ -22,32 +23,7 @@
 <body>
     <textarea class="form-control" id="editor"></textarea>
 
-    <script>
-        var element = document.getElementById('editor');
-
-        // When the field is instantiated it notifies the UI that it has been loaded.
-        // 
-        // Furthermore it sends the current size to the parent.
-        var field = new SquidexFormField();
-
-        // Handle the value change event and set the text to the editor.
-        field.onValueChanged(function (value) {
-            element.value = value || '';
-        });
-
-        // Disable the editor when it should be disabled.
-        field.onDisabled(function (disabled) {
-            element.disabled = disabled;
-        });
-
-        field.onFormValueChanged(function(value) {
-            if (value.a && value.a.iv && value.b && value.b.iv) {
-                element.value = value.a.iv + value.b.iv;
-
-                field.valueChanged(element.value);
-            }
-        });
-    </script>
+    <script src="scripts/editor-combined.js"></script>
 </body>
 
 </html>

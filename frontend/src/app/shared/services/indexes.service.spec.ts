@@ -10,6 +10,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, IndexDto, IndexesDto, IndexesService, IndexFieldDto, Resource } from '@app/shared/internal';
 import { CreateIndexDto, ResourceLinkDto } from '../model';
+import { environment } from 'src/environments/environment';
 
 describe('IndexesService', () => {
     beforeEach(() => {
@@ -19,7 +20,7 @@ describe('IndexesService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 IndexesService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

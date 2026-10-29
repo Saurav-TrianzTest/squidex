@@ -11,6 +11,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, UserDto, UsersDto } from '@app/shared';
 import { CreateUserDto, IResourceDto, ResourceLinkDto, UpdateUserDto } from '@app/shared/model';
 import { UsersService } from './users.service';
+import { environment } from 'src/environments/environment';
 
 describe('UsersService', () => {
     beforeEach(() => {
@@ -20,7 +21,7 @@ describe('UsersService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 UsersService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

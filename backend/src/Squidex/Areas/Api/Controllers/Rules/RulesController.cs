@@ -546,7 +546,7 @@ public sealed class RulesController(
 
         var runningRuleId = await ruleRunnerService.GetRunningRuleIdAsync(Context.App.Id, HttpContext.RequestAborted);
 
-        var result = context.Result<EnrichedRule>();
+        var result = await context.ResultAsync<EnrichedRule>();
         var response = RuleDto.FromDomain(result, runningRuleId == null, ruleRunnerService, Resources);
 
         return response;

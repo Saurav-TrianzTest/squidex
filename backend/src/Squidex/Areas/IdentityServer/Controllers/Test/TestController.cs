@@ -26,8 +26,8 @@ public sealed class TestController(DynamicSchemeProvider schemes) : IdentityServ
     }
 
     [Route("test/success/")]
-    public IActionResult Success()
+    public async Task<IActionResult> Success()
     {
-        return View();
+        return await ViewAsync();
     }
 }

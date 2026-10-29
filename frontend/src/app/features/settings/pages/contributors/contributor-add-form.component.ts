@@ -13,7 +13,7 @@ import { withLatestFrom } from 'rxjs/operators';
 import { AssignContributorForm, AutocompleteComponent, AutocompleteSource, ContributorsState, DialogModel, DialogService, FormHintComponent, ModalDirective, RoleDto, TranslatePipe, UserDtoPicture, UsersService } from '@app/shared';
 import { ImportContributorsDialogComponent } from './import-contributors-dialog.component';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UsersDataSource implements AutocompleteSource {
     constructor(
         private readonly contributorsState: ContributorsState,

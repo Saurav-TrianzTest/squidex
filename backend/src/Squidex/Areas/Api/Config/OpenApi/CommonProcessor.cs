@@ -5,6 +5,7 @@
 //  All rights reserved. Licensed under the MIT license.
 // ==========================================================================
 
+using Microsoft.Extensions.Configuration;
 using NSwag;
 using NSwag.Generation.Processors;
 using NSwag.Generation.Processors.Contexts;
@@ -18,9 +19,11 @@ public sealed class CommonProcessor : IDocumentProcessor
     private readonly string version;
     private readonly string logoColor = "#3f83df";
     private readonly string logoUrl;
+    private readonly IConfiguration config;
 
-    public CommonProcessor(ExposedValues exposedValues, IUrlGenerator urlGenerator)
+    public CommonProcessor(ExposedValues exposedValues, IUrlGenerator urlGenerator, IConfiguration config)
     {
+        this.config = config;
         logoUrl = urlGenerator.BuildUrl("images/logo-white.png", false);
 
         if (!exposedValues.TryGetValue("version", out version!) || version == null)
@@ -45,7 +48,7 @@ public sealed class CommonProcessor : IDocumentProcessor
 
         context.Document.ExternalDocumentation = new OpenApiExternalDocumentation
         {
-            Url = "https://docs.squidex.io",
+            Url = config["Api:DocumentationUrl"] ?? "https://docs.squidex.io",
         };
     }
 }

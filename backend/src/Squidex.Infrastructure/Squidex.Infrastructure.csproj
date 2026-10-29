@@ -11,6 +11,8 @@
     <DebugSymbols>True</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="AWSSDK.SimpleSystemsManagement" Version="3.7.403.17" />
+    <PackageReference Include="AWSSDK.S3" Version="4.0.104.7" />
     <PackageReference Include="MailKit" Version="4.16.0" />
     <PackageReference Include="McMaster.NETCore.Plugins" Version="2.0.0" />
     <PackageReference Include="Meziantou.Analyzer" Version="3.0.50">
@@ -31,6 +33,7 @@
     <PackageReference Include="Squidex.Log" Version="8.0.6" />
     <PackageReference Include="Squidex.Messaging" Version="8.0.6" />
     <PackageReference Include="Squidex.Text" Version="8.0.6" />
+    <PackageReference Include="StackExchange.Redis" Version="3.4.20" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="all" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Linq.Async" Version="7.0.1" />

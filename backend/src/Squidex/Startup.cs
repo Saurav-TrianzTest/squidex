@@ -5,6 +5,7 @@
 //  All rights reserved. Licensed under the MIT license.
 // ==========================================================================
 
+using Amazon.S3;
 using Squidex.Areas.Api.Config.OpenApi;
 using Squidex.Areas.Frontend;
 using Squidex.Areas.IdentityServer.Config;
@@ -24,8 +25,14 @@ public sealed class Startup(IConfiguration config)
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddHttpClient();
-        services.AddMemoryCache();
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = config.GetConnectionString("Redis") ?? "localhost:6379";
+            options.InstanceName = "Squidex:";
+        });
         services.AddHealthChecks();
+        services.AddAWSService<IAmazonS3>();
+        services.AddDefaultAWSOptions(config.GetAWSOptions());
         services.AddDefaultWebServices(config);
         services.AddDefaultForwardRules();
         services.AddSsrfProtectedHttpClient(config);
@@ -74,7 +81,20 @@ public sealed class Startup(IConfiguration config)
 
     public void Configure(IApplicationBuilder app)
     {
-        app.UseWebSockets();
+        app.UseWebSockets(new WebSocketOptions
+        {
+            KeepAliveInterval = TimeSpan.FromSeconds(30),
+            ReceiveBufferLimit = null,
+            ReceiveBufferSize = 4096,
+            SendBufferSize = 4096,
+            MaxMessageSize = null,
+        });
+        app.Use(async (context, next) =>
+        {
+            context.Response.Headers.Append("Content-Security-Policy",
+                "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'");
+            await next();
+        });
         app.UseCookiePolicy();
         app.UseFallbackPathBase();
         app.UseDefaultForwardRules();

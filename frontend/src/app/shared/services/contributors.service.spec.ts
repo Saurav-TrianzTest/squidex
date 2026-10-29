@@ -10,6 +10,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, ContributorDto, ContributorsDto, ContributorsService, Resource, Versioned, VersionTag } from '@app/shared/internal';
 import { AssignContributorDto, ContributorsMetadataDto, ResourceLinkDto } from '../model';
+import { environment } from 'src/environments/environment';
 
 describe('ContributorsService', () => {
     const version = new VersionTag('1');
@@ -21,7 +22,7 @@ describe('ContributorsService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 ContributorsService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

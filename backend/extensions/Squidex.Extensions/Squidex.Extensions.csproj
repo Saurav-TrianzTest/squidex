@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\src\Squidex.Web\Squidex.Web.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AWSSDK.SimpleEmail" Version="4.0.100.21" />
     <PackageReference Include="Algolia.Search" Version="6.17.0" />
     <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.20.1" />
     <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.7.0" />

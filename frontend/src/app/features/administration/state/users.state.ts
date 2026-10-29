@@ -25,7 +25,7 @@ interface Snapshot extends ListState<string> {
     canCreate?: boolean;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UsersState extends State<Snapshot> {
     public users =
         this.project(x => x.users);

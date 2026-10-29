@@ -174,6 +174,6 @@ public sealed class AssetFoldersController(ICommandBus commandBus, IAssetQuerySe
     {
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        return AssetFolderDto.FromDomain(context.Result<AssetFolder>(), Resources);
+        return AssetFolderDto.FromDomain(await context.ResultAsync<AssetFolder>(), Resources);
     }
 }

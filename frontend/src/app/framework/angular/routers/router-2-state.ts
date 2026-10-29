@@ -161,7 +161,7 @@ export interface StateSynchronizerMap<T> {
     getInitial(): Partial<T>;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class Router2State implements OnDestroy, StateSynchronizer {
     private mapper?: Router2StateMap<any>;
 

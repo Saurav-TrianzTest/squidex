@@ -5,6 +5,14 @@ declare var require: any;
 
 export const environment = {
     production: false,
+    apiUrl: 'http://service/p/',
+    docsUrl: 'https://docs.squidex.io',
+    redirectUrl: 'http://url',
+    avatarPlaceholderUrl: 'https://placehold.co/400',
+    invalidImageUrl: 'https://invalid-url',
+    notifoSdkUrl: 'https://localhost:3002/notifo-sdk.js',
+    osmAttributionUrl: 'https://osm.org/copyright',
+    unsplashUrl: 'https://images.unsplash.com',
     textResolver: () => {
         const culture = (window as any)['options']?.culture || 'en';
 

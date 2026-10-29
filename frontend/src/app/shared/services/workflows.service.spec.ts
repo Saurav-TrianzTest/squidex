@@ -10,6 +10,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, Resource, Versioned, VersionTag, WorkflowDto, WorkflowsDto, WorkflowsService } from '@app/shared/internal';
 import { AddWorkflowDto, ResourceLinkDto, UpdateWorkflowDto, WorkflowStepDto, WorkflowTransitionDto } from '../model';
+import { environment } from 'src/environments/environment';
 
 describe('WorkflowsService', () => {
     const version = new VersionTag('1');
@@ -21,7 +22,7 @@ describe('WorkflowsService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 WorkflowsService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

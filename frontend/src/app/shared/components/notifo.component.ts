@@ -6,6 +6,7 @@
  */
 
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, Input, OnDestroy, Renderer2, ViewChild } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { ResourceLoaderService, TypedSimpleChanges, UIOptions } from '@app/framework';
 import { AuthService } from '@app/shared/internal';
 import { TourHintDirective } from './tour-hint.directive';
@@ -20,7 +21,7 @@ import { TourHintDirective } from './tour-hint.directive';
     ],
 })
 export class NotifoComponent implements AfterViewInit, OnDestroy {
-    private readonly notifoApiUrl: string = inject(UIOptions).value.notifoApi;
+    private readonly notifoApiUrl: string = inject<UIOptions>(UIOptions).value.notifoApi;
     private readonly notifoApiKey: string | undefined;
 
     @Input()
@@ -47,7 +48,7 @@ export class NotifoComponent implements AfterViewInit, OnDestroy {
 
         if (this.isConfigured) {
             if (this.notifoApiUrl.indexOf('localhost:5002') >= 0) {
-                resourceLoader.loadScript('https://localhost:3002/notifo-sdk.js');
+                resourceLoader.loadScript(`${environment.notifoSdkUrl || 'https://localhost:3002/notifo-sdk.js'}`);
             } else {
                 resourceLoader.loadScript(`${this.notifoApiUrl}/build/notifo-sdk.js`);
             }
@@ -69,7 +70,7 @@ export class NotifoComponent implements AfterViewInit, OnDestroy {
                 };
 
                 if (this.notifoApiUrl.includes('localhost:5002')) {
-                    options.styleUrl = 'https://localhost:3002/notifo-sdk.css';
+                    options.styleUrl = `${environment.notifoSdkUrl || 'https://localhost:3002/notifo-sdk.css'}`;
                 }
 
                 notifo.push(['init', options]);

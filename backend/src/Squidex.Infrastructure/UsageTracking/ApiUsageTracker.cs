@@ -92,7 +92,7 @@ public sealed class ApiUsageTracker(IUsageTracker usageTracker) : IApiUsageTrack
 
         var summaryElapsedAvg = CalculateAverage(summaryCalls, summaryElapsed);
 
-        var monthStats = await usageTracker.GetForMonthAsync(apiKey, DateTime.Today.ToDateOnly(), null, ct);
+        var monthStats = await usageTracker.GetForMonthAsync(apiKey, DateOnly.FromDateTime(DateTime.UtcNow), null, ct);
 
         var summary = new ApiStatsSummary(
             summaryElapsedAvg,

@@ -147,7 +147,7 @@ public static class ScriptingExtensions
             {
                 var snapshot = operation.Snapshot;
 
-                operation.ValidateContentAndInputAsync(snapshot.EditingData, false, snapshot.IsPublished || status == Status.Published, default).Wait();
+                operation.ValidateContentAndInputAsync(snapshot.EditingData, false, snapshot.IsPublished || status == Status.Published, default).GetAwaiter().GetResult();
             }
             catch (AggregateException ex) when (ex.InnerException != null)
             {

@@ -143,7 +143,7 @@ public sealed class AppRolesController(ICommandBus commandBus, RolePermissionsPr
     {
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<App>();
+        var result = await context.ResultAsync<App>();
         var response = GetResponse(result);
 
         return response;

@@ -89,7 +89,7 @@ public class InviteUserCommandMiddlewareTests : GivenContext
 
         await sut.HandleAsync(context, CancellationToken);
 
-        Assert.Same(context.Result<App>(), App);
+        Assert.Same(await context.ResultAsync<App>(), App);
         Assert.Equal(user.Id, command.ContributorId);
 
         A.CallTo(() => userResolver.CreateUserIfNotExistsAsync(user.Email, true, CancellationToken))
@@ -112,7 +112,7 @@ public class InviteUserCommandMiddlewareTests : GivenContext
 
         await sut.HandleAsync(context, CancellationToken);
 
-        Assert.Same(context.Result<Team>(), Team);
+        Assert.Same(await context.ResultAsync<Team>(), Team);
         Assert.Equal(user.Id, command.ContributorId);
 
         A.CallTo(() => userResolver.CreateUserIfNotExistsAsync(user.Email, true, CancellationToken))

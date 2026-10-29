@@ -37,7 +37,7 @@ const NO_EMIT = { emitEvent: false };
 })
 export class ReferencesCheckboxesComponent extends StatefulControlComponent<State, ReadonlyArray<string> | null | undefined> {
     private readonly subscriptions = new Subscriptions();
-    private readonly itemCount: number = inject(UIOptions).value.referencesDropdownItemCount;
+    private readonly itemCount: number = inject<UIOptions>(UIOptions).value.referencesDropdownItemCount;
     private contentItems: ReadonlyArray<ContentDto> | null = null;
 
     @Input({ required: true })

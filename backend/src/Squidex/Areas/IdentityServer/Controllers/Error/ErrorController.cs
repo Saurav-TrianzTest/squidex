@@ -33,13 +33,13 @@ public sealed class ErrorController(IOptions<MyIdentityOptions> identityOptions)
 
         if (!string.IsNullOrWhiteSpace(vm.ErrorMessage))
         {
-            return View("Error", vm);
+            return await ViewAsync("Error", vm);
         }
 
         var source = HttpContext.Features.Get<IExceptionHandlerFeature>();
         if (source == null)
         {
-            return View("Error", vm);
+            return await ViewAsync("Error", vm);
         }
 
         var exception = source.Error;
@@ -57,7 +57,7 @@ public sealed class ErrorController(IOptions<MyIdentityOptions> identityOptions)
             vm.ErrorMessage = mappedError;
         }
 
-        return View("Error", vm);
+        return await ViewAsync("Error", vm);
     }
 
     private bool TryGetMappedError(Exception? exception, out string message)

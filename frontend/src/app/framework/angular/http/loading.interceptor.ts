@@ -19,7 +19,7 @@ export const loadingInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerF
         return next(req);
     }
 
-    const loadingService = inject(LoadingService);
+    const loadingService = inject<LoadingService>(LoadingService);
 
     loadingService.startLoading(id);
 

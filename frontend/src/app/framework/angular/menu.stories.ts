@@ -38,7 +38,7 @@ export default {
             providers: [
                 {
                     provide: LocalizerService,
-                    useFactory: () => new LocalizerService({}),
+                    useFactory: (): LocalizerService => new LocalizerService({}),
                 },
                 ResizeService,
             ],

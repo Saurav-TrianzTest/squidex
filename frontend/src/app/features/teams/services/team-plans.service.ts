@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiUrlConfig, ChangePlanDto, HTTP, mapVersioned, PlanChangedDto, PlansDto, pretifyError, Versioned, VersionOrTag } from '@app/shared';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TeamPlansService {
     constructor(
         private readonly http: HttpClient,

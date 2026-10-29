@@ -11,9 +11,9 @@ import { map, tap } from 'rxjs/operators';
 import { TeamsState } from '../state/teams.state';
 
 export const teamMustExistGuard = (route: ActivatedRouteSnapshot) => {
-    const teamsState = inject(TeamsState);
+    const teamsState = inject<TeamsState>(TeamsState);
     const teamName = route.params['teamName'];
-    const router = inject(Router);
+    const router = inject<Router>(Router);
 
     const result =
         teamsState.select(teamName).pipe(

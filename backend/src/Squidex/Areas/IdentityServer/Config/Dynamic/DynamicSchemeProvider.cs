@@ -127,7 +127,7 @@ public sealed class DynamicSchemeProvider(
         }
 
         // This method is not called very often, so the performance issues are acceptable here.
-        var scheme = GetSchemeCoreAsync(name, default).Result;
+        var scheme = GetSchemeCoreAsync(name, default).GetAwaiter().GetResult();
 
         return scheme?.Options ?? new DynamicOpenIdConnectOptions();
     }

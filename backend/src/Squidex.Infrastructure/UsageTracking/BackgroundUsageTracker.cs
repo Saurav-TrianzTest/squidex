@@ -37,7 +37,7 @@ public sealed class BackgroundUsageTracker : DisposableObjectBase, IUsageTracker
     {
         if (disposing)
         {
-            usageTimer.StopAsync().Wait();
+            usageTimer.StopAsync().GetAwaiter().GetResult();
         }
     }
 

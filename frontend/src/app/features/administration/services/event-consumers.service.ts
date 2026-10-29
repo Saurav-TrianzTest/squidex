@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiUrlConfig, EventConsumerDto, EventConsumersDto, IResourceDto, pretifyError } from '@app/shared';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EventConsumersService {
     constructor(
         private readonly http: HttpClient,

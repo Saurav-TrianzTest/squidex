@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 import { UIState } from '../state/ui.state';
 
 export const loadSettingsGuard = () => {
-    const uiState = inject(UIState);
+    const uiState = inject<UIState>(UIState);
 
     return uiState.load().pipe(map(() => true));
 };

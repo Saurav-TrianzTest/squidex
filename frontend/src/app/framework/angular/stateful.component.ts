@@ -13,7 +13,7 @@ import { State } from '../state';
 @Directive()
 export abstract class StatefulComponent<T extends {} = object> extends State<T> implements OnDestroy {
     private readonly subscription: Subscription;
-    private readonly changeDetector = inject(ChangeDetectorRef);
+    private readonly changeDetector = inject<ChangeDetectorRef>(ChangeDetectorRef);
 
     protected constructor(state: T) {
         super(state);

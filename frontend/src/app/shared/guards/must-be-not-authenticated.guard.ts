@@ -13,10 +13,10 @@ import { UIOptions } from '@app/framework';
 import { AuthService } from '../services/auth.service';
 
 export const mustBeNotAuthenticatedGuard = (route: ActivatedRouteSnapshot) => {
-    const authService = inject(AuthService);
-    const location = inject(Location);
-    const options = inject(UIOptions);
-    const router = inject(Router);
+    const authService = inject<AuthService>(AuthService);
+    const location = inject<Location>(Location);
+    const options = inject<UIOptions>(UIOptions);
+    const router = inject<Router>(Router);
 
     const redirect = options.value.redirectToLogin && !route.queryParams.logout;
 

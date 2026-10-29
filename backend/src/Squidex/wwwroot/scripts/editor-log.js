@@ -1,0 +1,106 @@
+var numberGenerator = 1;
+
+// The button to generate a new value.
+var button = document.getElementById('button');
+
+var textarea = document.getElementById('textarea');
+
+// When the field is instantiated it notifies the UI that it has been loaded.
+// 
+// Furthermore it sends the current size to the parent.
+var field = new SquidexFormField();
+
+function logState(message) {
+    var text = '';
+
+    function appendLabel(value) {
+        value += ':';
+
+        text += value.padEnd(20);
+    }
+
+    function appendLine(value) {
+        if (value !== undefined) {
+            text += value;
+        }
+
+        text += '\n';
+    }
+
+    appendLine(message);
+
+    appendLabel('Language');
+    appendLine(`<${JSON.stringify(field.getLanguage(), 2)}>`);
+
+    appendLabel('Is FullScreen');
+    appendLine(field.isFullscreen());
+
+    appendLabel('Is Expanded');
+    appendLine(field.isExpanded());
+
+    appendLabel('Index');
+    appendLine(field.getIndex());
+
+    appendLabel('Value of Field');
+    appendLine(`<${JSON.stringify(field.getValue(), 2)}>`);
+
+    appendLabel('Value of Form');
+    appendLine(`<${JSON.stringify(field.getFormValue(), 2)}>`);
+
+    appendLabel('Disabled');
+    appendLine(field.isDisabled());
+
+    console.log(text);
+
+    if (!textarea.value) {
+        textarea.value = text;
+    } else {
+        textarea.value = textarea.value + '\n---\n\n' + text;
+        textarea.scrollLeft = 0;
+        textarea.scrollTop = textarea.scrollHeight;
+    }
+}
+
+logState('Setup');
+
+if (button) {
+    button.addEventListener('click', function () {
+        numberGenerator++;
+
+        field.valueChanged(numberGenerator);
+
+        logState('Click');
+    });
+}
+
+field.onInit(function () {
+    logState('Init');
+});
+
+field.onValueChanged(function () {
+    logState('Value changed');
+});
+
+field.onFormValueChanged(function () {
+    logState('Form value changed');
+});
+
+field.onMoved(function (index) {
+    logState('Form value moved');
+});
+
+field.onLanguageChanged(function () {
+    logState('Field language changed');
+});
+
+field.onContextChanged(function () {
+    logState('Context changed');
+});
+
+field.onExpanded(function () {
+    logState('Expanded changed');
+});
+
+field.onDisabled(function (disabled) {
+    logState(`Disabled: <${JSON.stringify(disabled, 2)}>`);
+});

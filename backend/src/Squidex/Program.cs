@@ -14,7 +14,25 @@ public static class Program
 {
     public static void Main(string[] args)
     {
-        CreateHostBuilder(args).Build().Run();
+        var host = CreateHostBuilder(args).Build();
+
+        // Register graceful shutdown handlers.
+        var lifetime = host.Services.GetRequiredService<Microsoft.Extensions.Hosting.IHostApplicationLifetime>();
+        lifetime.ApplicationStopping.Register(OnStopping);
+        lifetime.ApplicationStopped.Register(OnStopped);
+
+        host.Run();
+    }
+
+    private static void OnStopping()
+    {
+        // Gracefully drain connections and flush buffers before shutdown.
+        // Cloud orchestrators (ECS, EKS) send SIGTERM during scale-down.
+    }
+
+    private static void OnStopped()
+    {
+        // Release cloud resources after shutdown.
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>

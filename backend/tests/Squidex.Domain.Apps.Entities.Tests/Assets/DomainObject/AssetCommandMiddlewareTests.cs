@@ -86,7 +86,7 @@ public class AssetCommandMiddlewareTests : HandlerTestBase<Asset>
             await HandleAsync(new AnnotateAsset(),
                 actual);
 
-        Assert.Same(enriched, context.Result<EnrichedAsset>());
+        Assert.Same(enriched, await context.ResultAsync<EnrichedAsset>());
     }
 
     [Fact]
@@ -98,7 +98,7 @@ public class AssetCommandMiddlewareTests : HandlerTestBase<Asset>
             await HandleAsync(new CreateAsset { File = file },
                 actual);
 
-        Assert.Same(actual, context.Result<EnrichedAsset>());
+        Assert.Same(actual, await context.ResultAsync<EnrichedAsset>());
 
         AssertAssetHasBeenUploaded(0);
         AssertMetadataEnriched();
@@ -125,7 +125,7 @@ public class AssetCommandMiddlewareTests : HandlerTestBase<Asset>
             await HandleAsync(new CreateAsset { File = file, Duplicate = true },
                 actual);
 
-        Assert.Same(actual, context.Result<EnrichedAsset>());
+        Assert.Same(actual, await context.ResultAsync<EnrichedAsset>());
     }
 
     [Fact]
@@ -137,7 +137,7 @@ public class AssetCommandMiddlewareTests : HandlerTestBase<Asset>
             await HandleAsync(new CreateAsset { File = file },
                 CreateAsset());
 
-        Assert.Same(duplicate, context.Result<AssetDuplicate>().Asset);
+        Assert.Same(duplicate, await context.ResultAsync<AssetDuplicate>().Asset);
     }
 
     [Fact]
@@ -183,7 +183,7 @@ public class AssetCommandMiddlewareTests : HandlerTestBase<Asset>
             await HandleAsync(new UpsertAsset { File = file },
                 actual);
 
-        Assert.Same(actual, context.Result<EnrichedAsset>());
+        Assert.Same(actual, await context.ResultAsync<EnrichedAsset>());
     }
 
     [Fact]
@@ -195,7 +195,7 @@ public class AssetCommandMiddlewareTests : HandlerTestBase<Asset>
             await HandleAsync(new UpsertAsset { File = file, Duplicate = false },
                 CreateAsset());
 
-        Assert.Same(duplicate, context.Result<AssetDuplicate>().Asset);
+        Assert.Same(duplicate, await context.ResultAsync<AssetDuplicate>().Asset);
     }
 
     [Fact]

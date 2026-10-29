@@ -58,7 +58,7 @@ public class ContentCommandMiddlewareTests : HandlerTestBase<WriteContent>
             await HandleAsync(new CreateContent(),
                 actual);
 
-        Assert.Same(actual, context.Result<Content>());
+        Assert.Same(actual, await context.ResultAsync<Content>());
 
         A.CallTo(() => contentEnricher.EnrichAsync(A<Content>._, A<bool>._, ApiContext, A<CancellationToken>._))
             .MustNotHaveHappened();
@@ -78,7 +78,7 @@ public class ContentCommandMiddlewareTests : HandlerTestBase<WriteContent>
             await HandleAsync(new CreateContent(),
                 actual);
 
-        Assert.Same(enriched, context.Result<Content>());
+        Assert.Same(enriched, await context.ResultAsync<Content>());
     }
 
     [Fact]
@@ -95,7 +95,7 @@ public class ContentCommandMiddlewareTests : HandlerTestBase<WriteContent>
             await HandleAsync(new CreateContent(),
                 actual);
 
-        Assert.Same(enriched, context.Result<Content>());
+        Assert.Same(enriched, await context.ResultAsync<Content>());
     }
 
     private Task<CommandContext> HandleAsync(ContentCommand command, object actual)

@@ -12,9 +12,9 @@ import { allParams } from '@app/framework';
 import { ContentsState } from '@app/shared/internal';
 
 export const contentMustExistGuard = (route: ActivatedRouteSnapshot) => {
-    const contentsState = inject(ContentsState);
+    const contentsState = inject<ContentsState>(ContentsState);
     const contentId = allParams(route)['contentId'];
-    const router = inject(Router);
+    const router = inject<Router>(Router);
 
     if (!contentId || contentId === 'new') {
         return contentsState.select(null).pipe(map(u => u === null));

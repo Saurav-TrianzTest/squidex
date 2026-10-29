@@ -7,6 +7,7 @@
 
 
 import { AfterViewInit, booleanAttribute, ChangeDetectionStrategy, Component, ElementRef, forwardRef, inject, Input, ViewChild } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { ControlErrorsComponent, ResizedDirective, StringHelper, TooltipDirective, TranslatePipe } from '@app/framework';
 import { ExtendedFormGroup, LocalStoreService, ResourceLoaderService, Settings, StatefulControlComponent, Types, UIOptions, ValidatorsEx } from '@app/shared/internal';
@@ -48,7 +49,7 @@ type UpdateOptions = { reset?: boolean; pan?: true; fire?: boolean };
     ],
 })
 export class GeolocationEditorComponent extends StatefulControlComponent<State, Geolocation> implements AfterViewInit {
-    private readonly googleMapsKey = inject(UIOptions).value.map.googleMaps.key;
+    private readonly googleMapsKey = inject<UIOptions>(UIOptions).value.map.googleMaps.key;
     private marker: any;
     private map: any;
     private value: Geolocation | null = null;
@@ -64,7 +65,7 @@ export class GeolocationEditorComponent extends StatefulControlComponent<State, 
         this.setDisabledState(value === true);
     }
 
-    public readonly isGoogleMaps = inject(UIOptions).value.map.type !== 'OSM';
+    public readonly isGoogleMaps = inject<UIOptions>(UIOptions).value.map.type !== 'OSM';
 
     public geolocationForm =
         new ExtendedFormGroup({
@@ -190,7 +191,7 @@ export class GeolocationEditorComponent extends StatefulControlComponent<State, 
 
         L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png',
         {
-            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
+            attribution: `&copy; <a href="${environment.osmAttributionUrl || 'https://osm.org/copyright'}">OpenStreetMap</a> contributors`,
         }).addTo(this.map);
 
         L.Control.geocoder({

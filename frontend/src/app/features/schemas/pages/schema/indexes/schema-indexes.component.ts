@@ -31,7 +31,7 @@ import { IndexComponent } from './index.component';
 export class SchemaIndexesComponent implements OnInit {
     private readonly subscriptions = new Subscriptions();
 
-    public readonly canCreateIndexes = inject(UIOptions).value.canCreateIndexes;
+    public readonly canCreateIndexes = inject<UIOptions>(UIOptions).value.canCreateIndexes;
 
     @Input({ required: true })
     public schema!: SchemaDto;

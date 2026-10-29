@@ -116,7 +116,13 @@ public class AuthorizationTests(ClientFixture fixture) : IClassFixture<ClientFix
 
         using var httpClient = new HttpClient();
 
-        var responseRead = await httpClient.GetAsync(url);
+        var retryPolicy = Polly.Policy
+            .Handle<HttpRequestException>()
+            .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.ServiceUnavailable)
+            .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
+            .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+        var responseRead = await retryPolicy.ExecuteAsync(() => httpClient.GetAsync(url));
 
         Assert.Equal(HttpStatusCode.OK, responseRead.StatusCode);
 

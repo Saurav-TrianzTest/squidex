@@ -77,7 +77,17 @@ public static class WebServices
 
         services.AddYDotNet()
             .AutoCleanup()
-            .AddWebSockets();
+            .AddWebSockets(options =>
+            {
+                // AWS ALB has a default idle timeout of 60 seconds.
+                // Configure keep-alive interval to prevent WebSocket disconnections.
+                options.KeepAliveInterval = TimeSpan.FromSeconds(30);
+                options.ReceiveBufferLimit = null;
+                options.ReceiveBufferSize = 4096;
+                options.SendBufferSize = 4096;
+                options.MaxMessageSize = null;
+                options.CloseStatusCode = 1000;
+            });
 
         services.Configure<ResponseCompressionOptions>((services, options) =>
         {
@@ -102,6 +112,8 @@ public static class WebServices
 
         services.AddResponseCompression();
 
+        services.AddWebOptimizer(minifyJavaScript: true, minifyCss: true, throwOnExceptions: false);
+
         services.AddMvc(options =>
         {
             // Never change this order here.
@@ -121,9 +133,6 @@ public static class WebServices
             options.ModelMetadataDetailsProviders.Add(new SuppressChildValidationMetadataProvider(typeof(JsonValue)));
         })
         .AddDataAnnotationsLocalization()
-#if DEBUG
-        .AddRazorRuntimeCompilation()
-#endif
         .AddSquidexPlugins(config)
         .AddSquidexSerializers();
     }

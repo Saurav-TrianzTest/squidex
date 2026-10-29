@@ -248,7 +248,7 @@ public sealed class AssetsController(
 
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<BulkUpdateResult>();
+        var result = await context.ResultAsync<BulkUpdateResult>();
         var response = result.Select(x => BulkResultDto.FromDomain(x, HttpContext)).ToArray();
 
         return Ok(response);
@@ -414,7 +414,7 @@ public sealed class AssetsController(
         }
         else
         {
-            return AssetDto.FromDomain(context.Result<EnrichedAsset>(), Resources);
+            return AssetDto.FromDomain(await context.ResultAsync<EnrichedAsset>(), Resources);
         }
     }
 

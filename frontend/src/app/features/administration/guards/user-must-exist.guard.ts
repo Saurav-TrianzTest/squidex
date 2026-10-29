@@ -12,7 +12,7 @@ import { allParams } from '@app/shared';
 import { UsersState } from '../internal';
 
 export const userMustExistGuard = (route: ActivatedRouteSnapshot) => {
-    const usersState = inject(UsersState);
+    const usersState = inject<UsersState>(UsersState);
 
     const userId = allParams(route)['userId'];
 
@@ -20,7 +20,7 @@ export const userMustExistGuard = (route: ActivatedRouteSnapshot) => {
         return usersState.select(null).pipe(map(u => u === null));
     }
 
-    const router = inject(Router);
+    const router = inject<Router>(Router);
     const result =
         usersState.select(userId).pipe(
             tap(dto => {

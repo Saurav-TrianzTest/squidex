@@ -33,7 +33,7 @@ import { ApiUrlConfig, AppsState, CodeEditorComponent, CreateSchemaForm, FocusOn
     ],
 })
 export class SchemaFormComponent implements OnInit {
-    public readonly hasChatBot = inject(UIOptions).value.canUseChatBot;
+    public readonly hasChatBot = inject<UIOptions>(UIOptions).value.canUseChatBot;
 
     @Output()
     public create = new EventEmitter<SchemaDto>();

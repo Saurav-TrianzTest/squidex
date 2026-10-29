@@ -22,8 +22,8 @@ const THEME_KEY = 'squidex.theme';
     providedIn: 'root',
 })
 export class ThemeService implements OnDestroy {
-    private readonly document = inject(DOCUMENT);
-    private readonly localStore = inject(LocalStoreService);
+    private readonly document = inject<DOCUMENT>(DOCUMENT);
+    private readonly localStore = inject<LocalStoreService>(LocalStoreService);
     private readonly systemQuery = this.document.defaultView?.matchMedia?.('(prefers-color-scheme: dark)');
     private readonly systemListener = () => this.update();
     private readonly state$ = new BehaviorSubject<{ mode: ThemeMode; theme: Theme }>({ mode: 'system', theme: 'light' });

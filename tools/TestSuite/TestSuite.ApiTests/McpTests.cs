@@ -279,7 +279,13 @@ public class McpTests(McpFixture fixture) : IClassFixture<McpFixture>
     {
         using var httpClient = new HttpClient();
 
-        var response = await PostToolsListAsync(httpClient, _.McpUrl(_.AppName));
+        var retryPolicy = Polly.Policy
+            .Handle<HttpRequestException>()
+            .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.ServiceUnavailable)
+            .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
+            .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+        var response = await retryPolicy.ExecuteAsync(() => PostToolsListAsync(httpClient, _.McpUrl(_.AppName)));
 
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
@@ -307,6 +313,12 @@ public class McpTests(McpFixture fixture) : IClassFixture<McpFixture>
 
         // STEP 3: Use MCP without authentication.
         using var httpClient = new HttpClient();
+
+        var retryPolicy = Polly.Policy
+            .Handle<HttpRequestException>()
+            .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.ServiceUnavailable)
+            .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
+            .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
         await using var mcp = await _.CreateMcpClientAsync(httpClient, app.Options.AppName);
 
@@ -398,6 +410,12 @@ public class McpTests(McpFixture fixture) : IClassFixture<McpFixture>
             Convert.ToBase64String(Encoding.UTF8.GetBytes($"{clientId}:{secret}")));
         return httpClient;
     }
+
+    private static readonly Polly.Retry.AsyncRetryPolicy<HttpResponseMessage> RetryPolicy = Polly.Policy
+        .Handle<HttpRequestException>()
+        .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.ServiceUnavailable)
+        .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
+        .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
 
     private static async Task<string> CallAsync(McpClient mcp, string tool,
         Dictionary<string, object?>? arguments = null)

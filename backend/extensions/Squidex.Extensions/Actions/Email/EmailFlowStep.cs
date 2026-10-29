@@ -6,9 +6,8 @@
 // ==========================================================================
 
 using System.ComponentModel.DataAnnotations;
-using MailKit.Net.Smtp;
-using MimeKit;
-using MimeKit.Text;
+using Amazon.SimpleEmail;
+using Amazon.SimpleEmail.Model;
 using Squidex.Domain.Apps.Core.Rules.Deprecated;
 using Squidex.Flows;
 using Squidex.Infrastructure.Reflection;
@@ -79,31 +78,31 @@ internal sealed record EmailFlowStep : FlowStep, IConvertibleToAction
             return Next();
         }
 
-        using var smtpClient = new SmtpClient();
-
-        await smtpClient.ConnectAsync(ServerHost, ServerPort, cancellationToken: ct);
+        using var sesClient = new AmazonSimpleEmailServiceClient();
 
         if (!string.IsNullOrWhiteSpace(ServerUsername) && !string.IsNullOrWhiteSpace(ServerPassword))
         {
-            await smtpClient.AuthenticateAsync(ServerUsername, ServerPassword, ct);
+            // Amazon SES uses IAM credentials, not SMTP username/password
+            // The credentials are managed via IAM roles or environment variables
         }
 
-        var smtpMessage = new MimeMessage
+        var message = new Message
         {
-            Body = new TextPart(TextFormat.Html)
+            Body = new Body
             {
-                Text = MessageBody,
+                Html = new Content(MessageBody),
             },
-            Subject = MessageSubject,
+            Subject = new Content(MessageSubject),
         };
 
-        smtpMessage.From.Add(MailboxAddress.Parse(
-            MessageFrom));
+        var request = new SendEmailRequest
+        {
+            Source = MessageFrom,
+            Destination = new Destination(MessageTo),
+            Message = message,
+        };
 
-        smtpMessage.To.Add(MailboxAddress.Parse(
-            MessageTo));
-
-        await smtpClient.SendAsync(smtpMessage, ct);
+        await sesClient.SendEmailAsync(request, ct);
 
         executionContext.Log($"Email sent to {MessageTo}");
         return Next();

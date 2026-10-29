@@ -12,7 +12,7 @@ import { Types } from '../utils/types';
 export type ButtonItem = { owner: any; name: string; method: () => void } & ButtonOptions;
 export type ButtonOptions = { disabled?: boolean; color?: string };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ToolbarService {
     private readonly buttons$ = new BehaviorSubject<ReadonlyArray<ButtonItem>>([]);
 

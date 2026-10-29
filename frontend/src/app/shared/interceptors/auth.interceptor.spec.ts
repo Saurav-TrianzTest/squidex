@@ -15,6 +15,7 @@ import { firstValueFrom, lastValueFrom, of, onErrorResumeNextWith, throwError } 
 import { IMock, Mock, Times } from 'typemoq';
 import { ApiUrlConfig, AuthService } from '@app/shared/internal';
 import { authInterceptor } from './auth.interceptor';
+import { environment } from 'src/environments/environment';
 
 describe('AuthInterceptor', () => {
     let authService: IMock<AuthService>;
@@ -35,7 +36,7 @@ describe('AuthInterceptor', () => {
                 },
                 {
                     provide: ApiUrlConfig,
-                    useValue: new ApiUrlConfig('http://service/p/'),
+                    useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig,
                 },
                 {
                     provide: Location,

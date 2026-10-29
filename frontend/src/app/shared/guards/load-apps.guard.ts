@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 import { AppsState } from '../state/apps.state';
 
 export const loadAppsGuard = () => {
-    const appsState = inject(AppsState);
+    const appsState = inject<AppsState>(AppsState);
 
     return appsState.load().pipe(map(() => true));
 };

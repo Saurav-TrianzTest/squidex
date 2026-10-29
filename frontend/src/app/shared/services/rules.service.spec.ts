@@ -9,6 +9,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, ContentChangedRuleTriggerDto, DateTime, DynamicCreateRuleDto, DynamicFlowDefinitionDto, DynamicRuleDto, DynamicRulesDto, DynamicUpdateRuleDto, FlowDefinitionDto, FlowExecutionStateDto, ManualRuleTriggerDto, Resource, ResourceLinkDto, RuleElementDto, RuleElementPropertyDto, RuleEventDto, RuleEventsDto, RulesService, ScriptCompletions, SimulatedRuleEventDto, SimulatedRuleEventsDto, VersionTag } from '@app/shared/internal';
+import { environment } from 'src/environments/environment';
 
 describe('RulesService', () => {
     const version = new VersionTag('1');
@@ -20,7 +21,7 @@ describe('RulesService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 RulesService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

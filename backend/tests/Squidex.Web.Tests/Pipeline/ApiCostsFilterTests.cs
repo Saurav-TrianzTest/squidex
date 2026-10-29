@@ -51,7 +51,7 @@ public class ApiCostsFilterTests : GivenContext
 
         SetupApp();
 
-        A.CallTo(() => usageGate.IsBlockedAsync(App, A<string>._, DateTime.Today.ToDateOnly(), default))
+        A.CallTo(() => usageGate.IsBlockedAsync(App, A<string>._, DateOnly.FromDateTime(DateTime.UtcNow), default))
             .Returns(true);
 
         await sut.OnActionExecutionAsync(actionContext, next);
@@ -67,7 +67,7 @@ public class ApiCostsFilterTests : GivenContext
 
         SetupApp();
 
-        A.CallTo(() => usageGate.IsBlockedAsync(App, A<string>._, DateTime.Today.ToDateOnly(), default))
+        A.CallTo(() => usageGate.IsBlockedAsync(App, A<string>._, DateOnly.FromDateTime(DateTime.UtcNow), default))
             .Returns(false);
 
         await sut.OnActionExecutionAsync(actionContext, next);

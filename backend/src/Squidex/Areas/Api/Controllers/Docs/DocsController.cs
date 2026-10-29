@@ -15,13 +15,13 @@ public sealed class DocsController(ICommandBus commandBus) : ApiController(comma
 {
     [HttpGet]
     [Route("docs/")]
-    public IActionResult Docs()
+    public async Task<IActionResult> Docs()
     {
         var vm = new DocsVM
         {
             Specification = "~/api/swagger/v1/swagger.json",
         };
 
-        return View(nameof(Docs), vm);
+        return await ViewAsync(nameof(Docs), vm);
     }
 }

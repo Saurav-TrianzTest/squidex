@@ -598,7 +598,7 @@ export class AssetsState extends AssetsStateBase {
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ComponentAssetsState extends AssetsStateBase {
     constructor(
         appsState: AppsState, assetsService: AssetsService, dialogs: DialogService,

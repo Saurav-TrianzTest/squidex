@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 import { SchemasState } from '@app/shared/internal';
 
 export const loadSchemasGuard = () => {
-    const schemasState = inject(SchemasState);
+    const schemasState = inject<SchemasState>(SchemasState);
 
     return schemasState.load().pipe(map(_ => true));
 };

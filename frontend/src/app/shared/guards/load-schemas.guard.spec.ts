@@ -17,7 +17,7 @@ describe('LoadSchemasGuard', () => {
     beforeEach(() => {
         schemasState = Mock.ofType<SchemasState>();
 
-        TestBed.configureTestingModule({ providers: [{ provide: SchemasState, useValue: schemasState.object }] });
+        TestBed.configureTestingModule({ providers: [{ provide: SchemasState, useValue: schemasState.object as unknown as SchemasState }] });
     });
 
     bit('should load schemas', async () => {

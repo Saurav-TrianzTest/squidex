@@ -17,7 +17,7 @@ describe('UnsetAppGuard', () => {
     beforeEach(() => {
         appsState = Mock.ofType<AppsState>();
 
-        TestBed.configureTestingModule({ providers: [{ provide: AppsState, useValue: appsState.object }] });
+        TestBed.configureTestingModule({ providers: [{ provide: AppsState, useValue: appsState.object as unknown as AppsState }] });
     });
 
     bit('should unselect app', async () => {

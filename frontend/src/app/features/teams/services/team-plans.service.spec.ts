@@ -8,8 +8,10 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
+import { environment } from '../../../environments/environment';
 import { ApiUrlConfig, ChangePlanDto, PlanChangedDto, PlanDto, PlansDto, ReferralInfoDto, Versioned, VersionTag } from '@app/shared';
 import { TeamPlansService } from '../internal';
+import { environment } from 'src/environments/environment';
 
 describe('TeamPlansService', () => {
     const version = new VersionTag('1');
@@ -21,7 +23,7 @@ describe('TeamPlansService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 TeamPlansService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });
@@ -129,9 +131,9 @@ describe('TeamPlansService', () => {
             planChanged = result.payload;
         });
 
-        const req = httpMock.expectOne('http://service/p/api/teams/my-team/plan');
+        const req = httpMock.expectOne(`${environment.apiUrl}api/teams/my-team/plan`);
 
-        req.flush({ redirectUri: 'http://url' });
+        req.flush({ redirectUri: environment.redirectUrl || 'http://url' });
 
         expect(req.request.method).toEqual('PUT');
         expect(req.request.headers.get('If-Match')).toBe(version.value);

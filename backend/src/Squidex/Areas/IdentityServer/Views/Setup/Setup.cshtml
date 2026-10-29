@@ -1,5 +1,7 @@
 ﻿@model Squidex.Areas.IdentityServer.Controllers.Setup.SetupVM
 
+@inject IHtmlSanitizerService HtmlSanitizer
+
 @{
     ViewBag.Title = T.Get("setup.title");
 
@@ -14,7 +16,7 @@
 
             <div class="col">
                 <div>
-                    @Html.Raw(message)
+                    @Html.Raw(HtmlSanitizer.Sanitize(message))
                 </div>
             </div>
         </div>

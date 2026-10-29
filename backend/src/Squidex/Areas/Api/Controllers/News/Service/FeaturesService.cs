@@ -5,6 +5,7 @@
 //  All rights reserved. Licensed under the MIT license.
 // ==========================================================================
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Squidex.ClientLibrary;
 using FeatureDto = Squidex.Areas.Api.Controllers.News.Models.FeatureDto;
@@ -24,7 +25,7 @@ public sealed class FeaturesService
     {
     }
 
-    public FeaturesService(IOptions<MyNewsOptions> options)
+    public FeaturesService(IOptions<MyNewsOptions> options, IConfiguration config)
     {
         if (options.Value.IsConfigured())
         {
@@ -33,7 +34,7 @@ public sealed class FeaturesService
                 AppName = options.Value.AppName,
                 ClientId = options.Value.ClientId,
                 ClientSecret = options.Value.ClientSecret,
-                Url = "https://cloud.squidex.io",
+                Url = config["Api:BaseUrl"] ?? "https://cloud.squidex.io",
             };
 
             var client = new SquidexClient(squidexOptions);

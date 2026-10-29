@@ -42,7 +42,7 @@ interface Snapshot extends LoadingState {
     version: VersionTag;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TeamPlansState extends State<Snapshot> {
     public plans =
         this.project(x => x.plans);

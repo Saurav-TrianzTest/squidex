@@ -12,9 +12,9 @@ import { allParams } from '@app/framework';
 import { SchemasState } from '../state/schemas.state';
 
 export const schemaMustExistPublishedGuard = (route: ActivatedRouteSnapshot) => {
-    const schemasState = inject(SchemasState);
+    const schemasState = inject<SchemasState>(SchemasState);
     const schemaName = allParams(route)['schemaName'];
-    const router = inject(Router);
+    const router = inject<Router>(Router);
 
     const result =
         schemasState.select(schemaName).pipe(

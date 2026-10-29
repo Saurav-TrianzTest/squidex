@@ -120,7 +120,7 @@ public sealed class TeamContributorsController(ICommandBus commandBus, IUserReso
         }
         else
         {
-            return await GetResponseAsync(context.Result<Team>(), false);
+            return await GetResponseAsync(await context.ResultAsync<Team>(), false);
         }
     }
 

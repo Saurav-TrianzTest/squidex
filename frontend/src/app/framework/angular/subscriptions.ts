@@ -15,7 +15,7 @@ export class Subscriptions {
     private subscriptions: (Subscription | UnsubscribeFunction)[] = [];
 
     constructor() {
-        const viewRef = inject(ChangeDetectorRef) as ViewRef;
+        const viewRef = inject<ChangeDetectorRef>(ChangeDetectorRef) as ViewRef;
 
         viewRef.onDestroy(() => {
             this.unsubscribeAll();

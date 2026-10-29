@@ -32,7 +32,7 @@ describe('ResolveContents', () => {
     ];
 
     beforeEach(() => {
-        TestBed.configureTestingModule({ providers: [{ provide: UIOptions, useValue: uiOptions }] });
+        TestBed.configureTestingModule({ providers: [{ provide: UIOptions, useValue: uiOptions as unknown as UIOptions }] });
         TestBed.runInInjectionContext(() => {
             contentsService = Mock.ofType<ContentsService>();
             contentsResolver = new ResolveContents(appsState.object, contentsService.object);

@@ -20,7 +20,7 @@ type TestMode = 'ErrorText' | 'ErrorDetails' | 'Info';
     `
 })
 class TestComponent {
-    public readonly dialogs = inject(DialogService);
+    public readonly dialogs = inject<DialogService>(DialogService);
 
     @Input()
     public mode: TestMode = 'Info';

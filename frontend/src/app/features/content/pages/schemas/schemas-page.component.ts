@@ -33,7 +33,7 @@ import { AppsState, getCategoryTree, LayoutComponent, SchemaCategoryComponent, S
 export class SchemasPageComponent {
     public schemasFilter = new UntypedFormControl();
 
-    public readonly isEmbedded = inject(UIOptions).value.embedded;
+    public readonly isEmbedded = inject<UIOptions>(UIOptions).value.embedded;
 
     public schemas =
         this.schemasState.schemas.pipe(

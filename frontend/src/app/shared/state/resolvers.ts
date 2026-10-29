@@ -102,10 +102,10 @@ abstract class ResolverBase<T extends { id: string }, TResult extends { items: R
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ResolveContents extends ResolverBase<ContentDto, ContentsDto> {
     private readonly schemas: { [name: string]: Observable<ContentsDto> } = {};
-    private readonly itemCount = inject(UIOptions).value.referencesDropdownItemCount;
+    private readonly itemCount = inject<UIOptions>(UIOptions).value.referencesDropdownItemCount;
 
     constructor(
         private readonly appsState: AppsState,
@@ -139,7 +139,7 @@ export class ResolveContents extends ResolverBase<ContentDto, ContentsDto> {
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ResolveAssets extends ResolverBase<AssetDto, AssetsDto> {
     constructor(
         private readonly appsState: AppsState,

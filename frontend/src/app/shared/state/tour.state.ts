@@ -34,8 +34,8 @@ interface Snapshot {
     providedIn: 'root',
 })
 export class TourState extends State<Snapshot> {
-    private readonly injector = inject(EnvironmentInjector);
-    private readonly isDisabled = inject(UIOptions).value.hideOnboarding;
+    private readonly injector = inject<EnvironmentInjector>(EnvironmentInjector);
+    private readonly isDisabled = inject<UIOptions>(UIOptions).value.hideOnboarding;
 
     public completedTasks =
         this.project(x => x.completedTasks);

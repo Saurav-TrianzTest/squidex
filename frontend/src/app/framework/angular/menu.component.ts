@@ -15,7 +15,7 @@ import { ModalPlacementDirective } from './modals/modal-placement.directive';
 import { ModalDirective } from './modals/modal.directive';
 import { TranslatePipe } from './pipes/translate.pipe';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MenuItemRegistry {
     public readonly menuItems = signal(new Set<MenuItemComponent>());
 
@@ -50,7 +50,7 @@ export class MenuItemRegistry {
     ],
     providers: [{
         provide: MenuItemRegistry,
-        useFactory: (menu: MenuComponent) => menu.menuItemsRegistry,
+        useFactory: (menu: MenuComponent): MenuItemRegistry => menu.menuItemsRegistry,
         deps: [MenuComponent],
     }]
 })

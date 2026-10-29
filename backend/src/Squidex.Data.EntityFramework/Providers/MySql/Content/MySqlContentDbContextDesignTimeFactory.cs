@@ -6,6 +6,7 @@
 // ==========================================================================
 
 using System.Text.Json;
+using Amazon.SimpleSystemsManagement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Squidex.Infrastructure;
@@ -18,7 +19,15 @@ public sealed class MySqlContentDbContextDesignTimeFactory : IDesignTimeDbContex
 {
     public MySqlContentDbContext CreateDbContext(string[] args)
     {
-        const string ConnectionString = "Server=localhost;Port=33060;Database=test;User=mysql;Password=mysql";
+        var host = Environment.GetEnvironmentVariable("Database__Host") ?? "localhost";
+        var port = Environment.GetEnvironmentVariable("Database__Port") ?? "33060";
+        var database = Environment.GetEnvironmentVariable("Database__Name") ?? "test";
+        var user = Environment.GetEnvironmentVariable("Database__User") ?? "mysql";
+        var secretName = Environment.GetEnvironmentVariable("Database__SecretName") ?? "/app/db/password";
+
+        var password = GetSecretFromParameterStore(secretName);
+
+        var ConnectionString = $"Server={host};Port={port};Database={database};User={user};Password={password}";
 
         var builder = new DbContextOptionsBuilder<MySqlAppDbContext>()
             .UsePrefix(string.Empty)
@@ -28,5 +37,24 @@ public sealed class MySqlContentDbContextDesignTimeFactory : IDesignTimeDbContex
             });
 
         return new MySqlContentDbContext(builder.Options, new SystemJsonSerializer(JsonSerializerOptions.Default));
+    }
+
+    private static string GetSecretFromParameterStore(string secretName)
+    {
+        try
+        {
+            var ssm = new AmazonSimpleSystemsManagementClient();
+            var response = ssm.GetParameterAsync(new Amazon.SimpleSystemsManagement.Model.GetParameterRequest
+            {
+                Name = secretName,
+                WithDecryption = true
+            }).GetAwaiter().GetResult();
+
+            return response.Parameter?.Value ?? string.Empty;
+        }
+        catch
+        {
+            return string.Empty;
+        }
     }
 }

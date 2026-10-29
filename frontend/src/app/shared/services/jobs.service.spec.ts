@@ -10,6 +10,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, DateTime, JobDto, JobLogMessageDto, JobsDto, JobsService, Resource } from '@app/shared/internal';
 import { ResourceLinkDto, RestoreJobDto, RestoreRequestDto } from '../model';
+import { environment } from 'src/environments/environment';
 
 describe('JobsService', () => {
     beforeEach(() => {
@@ -19,7 +20,7 @@ describe('JobsService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 JobsService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

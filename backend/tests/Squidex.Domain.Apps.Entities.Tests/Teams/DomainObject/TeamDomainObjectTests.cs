@@ -64,7 +64,7 @@ public class TeamDomainObjectTests : HandlerTestBase<Team>
             DisplayName = "Squidex",
             Authority = "https://identity.squidex.io",
             ClientId = "clientId",
-            ClientSecret = "clientSecret",
+            ClientSecret = Environment.GetEnvironmentVariable("Test:ClientSecret") ?? "clientSecret",
         };
 
         var serviceProvider =

@@ -29,7 +29,7 @@ import { FormHintComponent } from './form-hint.component';
     viewProviders: [
         {
             provide: FormGroupDirective,
-            useFactory: (directive: FormGroupDirective) => directive,
+            useFactory: (directive: FormGroupDirective): FormGroupDirective => directive,
             deps: [[new Optional(), new SkipSelf(), FormGroupDirective]],
         },
     ],

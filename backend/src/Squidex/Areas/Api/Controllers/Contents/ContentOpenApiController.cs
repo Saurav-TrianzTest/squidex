@@ -24,28 +24,28 @@ public sealed class ContentOpenApiController(
     [Route("content/{app}/docs/")]
     [ApiCosts(0)]
     [AllowAnonymous]
-    public IActionResult Docs(string app)
+    public async Task<IActionResult> Docs(string app)
     {
         var vm = new DocsVM
         {
             Specification = $"~/api/content/{app}/swagger/v1/swagger.json",
         };
 
-        return View(nameof(Docs), vm);
+        return await ViewAsync(nameof(Docs), vm);
     }
 
     [HttpGet]
     [Route("content/{app}/docs/flat/")]
     [ApiCosts(0)]
     [AllowAnonymous]
-    public IActionResult DocsFlat(string app)
+    public async Task<IActionResult> DocsFlat(string app)
     {
         var vm = new DocsVM
         {
             Specification = $"~/api/content/{app}/flat/swagger/v1/swagger.json",
         };
 
-        return View(nameof(Docs), vm);
+        return await ViewAsync(nameof(Docs), vm);
     }
 
     [HttpGet]

@@ -17,10 +17,10 @@ type AwarenessState = { user: Profile; [key: string]: any };
 
 export type CollaborationProvider = { awareness: Awareness; doc: Y.Doc; destroy: () => void };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CollaborationService {
     private readonly provider = new BehaviorSubject<CollaborationProvider | null>(null);
-    private readonly basePath = inject(UIOptions).value.collaborationService;
+    private readonly basePath = inject<UIOptions>(UIOptions).value.collaborationService;
     private readonly profile: Profile;
     private previousName?: string | null;
 

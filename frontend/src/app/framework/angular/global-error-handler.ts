@@ -8,7 +8,7 @@
 import { ErrorHandler, Injectable, NgZone } from '@angular/core';
 import { DialogService } from '../internal';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class GlobalErrorHandler implements ErrorHandler {
     constructor(
         private readonly dialogs: DialogService,

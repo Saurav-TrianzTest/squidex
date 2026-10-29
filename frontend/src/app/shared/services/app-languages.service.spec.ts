@@ -10,6 +10,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, AppLanguageDto, AppLanguagesDto, AppLanguagesService, Resource, Versioned, VersionTag } from '@app/shared/internal';
 import { AddLanguageDto, ResourceLinkDto, UpdateLanguageDto } from '../model';
+import { environment } from 'src/environments/environment';
 
 describe('AppLanguagesService', () => {
     const version = new VersionTag('1');
@@ -21,7 +22,7 @@ describe('AppLanguagesService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 AppLanguagesService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

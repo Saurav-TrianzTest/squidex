@@ -10,6 +10,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, AuthSchemeResponseDto, DateTime, Resource, TeamDto, TeamsService, Versioned, VersionTag } from '@app/shared/internal';
 import { AuthSchemeDto, AuthSchemeValueDto, CreateTeamDto, ResourceLinkDto, UpdateTeamDto } from '../model';
+import { environment } from 'src/environments/environment';
 
 describe('TeamsService', () => {
     const version = new VersionTag('1');
@@ -21,7 +22,7 @@ describe('TeamsService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 TeamsService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

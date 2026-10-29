@@ -24,7 +24,7 @@ public sealed class ClientCloudFixture
                 {
                     options.AppName = "squidex-website";
                     options.ClientId = "squidex-website:reader";
-                    options.ClientSecret = "yy9x4dcxsnp1s34r2z19t88wedbzxn1tfq7uzmoxf60x";
+                    options.ClientSecret = Environment.GetEnvironmentVariable("TestSuite:CloudClientSecret") ?? "yy9x4dcxsnp1s34r2z19t88wedbzxn1tfq7uzmoxf60x";
                     options.ReadResponseAsString = true;
                 })
                 .BuildServiceProvider()
@@ -37,7 +37,7 @@ public sealed class ClientCloudFixture
                     options.AppName = "squidex-website";
                     options.AssetCDN = "https://assets.squidex.io";
                     options.ClientId = "squidex-website:reader";
-                    options.ClientSecret = "yy9x4dcxsnp1s34r2z19t88wedbzxn1tfq7uzmoxf60x";
+                    options.ClientSecret = Environment.GetEnvironmentVariable("TestSuite:CloudClientSecret") ?? "yy9x4dcxsnp1s34r2z19t88wedbzxn1tfq7uzmoxf60x";
                     options.ContentCDN = "https://contents.squidex.io";
                 })
                 .BuildServiceProvider()

@@ -17,7 +17,7 @@ public class CachingUsageTrackerTests
     private readonly MemoryCache cache = new MemoryCache(Options.Create(new MemoryCacheOptions()));
     private readonly string key = Guid.NewGuid().ToString();
     private readonly string category = Guid.NewGuid().ToString();
-    private readonly DateOnly date = DateTime.Today.ToDateOnly();
+    private readonly DateOnly date = DateOnly.FromDateTime(DateTime.UtcNow);
     private readonly IUsageTracker inner = A.Fake<IUsageTracker>();
     private readonly IUsageTracker sut;
 

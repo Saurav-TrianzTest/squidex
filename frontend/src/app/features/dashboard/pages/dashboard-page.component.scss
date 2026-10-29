@@ -33,7 +33,7 @@ gridster-item {
             @include absolute(100%, 0, null, 0);
             content: '';
             padding: 0;
-            padding-bottom: var(--gridster-margin);
+            padding-bottom: var(--gridster-margin, 10px);
             pointer-events: none;
         }
     }

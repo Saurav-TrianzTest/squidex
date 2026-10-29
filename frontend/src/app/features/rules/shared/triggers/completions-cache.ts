@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 import { EMPTY, map, Observable, shareReplay } from 'rxjs';
 import { SchemasService, SchemasState, ScriptCompletions } from '@app/shared';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CompletionsCache {
     private readonly cache: { [schema: string]: Observable<ScriptCompletions> } = {};
 

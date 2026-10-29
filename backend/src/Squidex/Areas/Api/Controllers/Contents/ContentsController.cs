@@ -345,7 +345,7 @@ public sealed class ContentsController(
 
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<BulkUpdateResult>();
+        var result = await context.ResultAsync<BulkUpdateResult>();
         var response = result.Select(x => BulkResultDto.FromDomain(x, HttpContext)).ToArray();
 
         return Ok(response);
@@ -374,7 +374,7 @@ public sealed class ContentsController(
 
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<BulkUpdateResult>();
+        var result = await context.ResultAsync<BulkUpdateResult>();
         var response = result.Select(x => BulkResultDto.FromDomain(x, HttpContext)).ToArray();
 
         return Ok(response);
@@ -637,7 +637,7 @@ public sealed class ContentsController(
     {
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<EnrichedContent>();
+        var result = await context.ResultAsync<EnrichedContent>();
         var response = ContentDto.FromDomain(result, Resources);
 
         return response;

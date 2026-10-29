@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs").promises;
 const path = require("path");
 
 class AddButtonTypesStrategy {
@@ -122,16 +122,16 @@ const strategies = [
     new FixIconOnlyInteractivesStrategy(),
 ];
 
-function walk(dir) {
-    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+async function walk(dir) {
+    for (const entry of await fs.readdir(dir, { withFileTypes: true })) {
         const fullPath = path.join(dir, entry.name);
 
         if (entry.isDirectory()) {
             if (!SKIP_DIRS.includes(entry.name)) {
-                walk(fullPath);
+                await walk(fullPath);
             }
         } else if (entry.isFile() && entry.name.endsWith(".component.html") && !SKIP_FILES.includes(entry.name)) {
-            let content = fs.readFileSync(fullPath, "utf8");
+            let content = await fs.readFile(fullPath, "utf8");
             let changed = false;
 
             for (const strategy of strategies) {
@@ -143,7 +143,7 @@ function walk(dir) {
             }
 
             if (changed) {
-                fs.writeFileSync(fullPath, content, "utf8");
+                await fs.writeFile(fullPath, content, "utf8");
             }
         }
     }

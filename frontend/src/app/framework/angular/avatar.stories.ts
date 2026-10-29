@@ -6,6 +6,7 @@
  */
 
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
+import { environment } from '../../../environments/environment';
 import { AvatarComponent } from './avatar.component';
 
 export default {
@@ -38,13 +39,13 @@ export const Empty: Story = {
 
 export const Image = {
     args: {
-        image: 'https://placehold.co/400',
+        image: environment.avatarPlaceholderUrl || 'https://placehold.co/400',
     },
 };
 
 export const InvalidImage = {
     args: {
-        image: 'https://invalid-url',
+        image: environment.invalidImageUrl || 'https://invalid-url',
     },
 };
 
@@ -57,7 +58,7 @@ export const Large = {
 
 export const InvalidImageWithFallback = {
     args: {
-        image: 'https://invalid-url',
+        image: environment.invalidImageUrl || 'https://invalid-url',
         identifier: 'image',
     },
 };

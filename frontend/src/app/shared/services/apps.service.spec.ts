@@ -10,6 +10,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, AppDto, AppsDto, AppSettingsDto, AppsService, AssetScriptsDto, DateTime, EditorDto, ErrorDto, PatternDto, Resource, Versioned, VersionTag } from '@app/shared/internal';
 import { CreateAppDto, ResourceLinkDto, TransferToTeamDto, UpdateAppDto, UpdateAppSettingsDto, UpdateAssetScriptsDto } from '../model';
+import { environment } from 'src/environments/environment';
 
 describe('AppsService', () => {
     const version = new VersionTag('1');
@@ -21,7 +22,7 @@ describe('AppsService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 AppsService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

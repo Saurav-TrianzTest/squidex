@@ -10,6 +10,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, Resource, TemplateDetailsDto, TemplateDto, TemplatesDto, TemplatesService } from '@app/shared/internal';
 import { ResourceLinkDto } from '../model';
+import { environment } from 'src/environments/environment';
 
 describe('TemplatesService', () => {
     beforeEach(() => {
@@ -19,7 +20,7 @@ describe('TemplatesService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 TemplatesService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

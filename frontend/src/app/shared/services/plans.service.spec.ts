@@ -9,6 +9,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, ChangePlanDto, PlanChangedDto, PlanDto, PlansDto, PlansService, ReferralInfoDto, Versioned, VersionTag } from '@app/shared/internal';
+import { environment } from 'src/environments/environment';
 
 describe('PlansService', () => {
     const version = new VersionTag('1');
@@ -20,7 +21,7 @@ describe('PlansService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 PlansService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

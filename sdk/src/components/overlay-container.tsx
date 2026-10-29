@@ -132,7 +132,7 @@ export const OverlayContainer = (props: OverlayContainerProps) => {
     );
 }
 
-const CDN_URL = 'https://assets.squidex.io';
+const CDN_URL = process.env.CDN_URL || 'https://assets.squidex.io';
 
 function isToolbar(target: HTMLElement) {
     let current = target;

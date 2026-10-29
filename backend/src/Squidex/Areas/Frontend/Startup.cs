@@ -32,6 +32,8 @@ public static class Startup
 
         app.UseMiddleware<EmbedMiddleware>();
 
+        app.UseWebOptimizer();
+
         if (!environment.IsDevelopment())
         {
             var buildFolder = new PhysicalFileProvider(Path.Combine(environment.WebRootPath, "build"));
@@ -113,7 +115,7 @@ public static class Startup
                 }
                 else
                 {
-                    response.Headers[HeaderNames.CacheControl] = "max-age=5184000";
+                    response.Headers[HeaderNames.CacheControl] = "max-age=5184000, immutable";
                 }
             },
             FileProvider = fileProvider,

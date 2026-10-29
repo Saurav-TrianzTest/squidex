@@ -10,7 +10,7 @@ import { map, Observable, of } from 'rxjs';
 import { AutocompleteSource } from '@app/framework';
 import { ContributorsState } from '@app/shared/internal';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ContributorsDataSource implements AutocompleteSource {
     constructor(
         private readonly contributorsState: ContributorsState,

@@ -107,7 +107,7 @@ public sealed class AdminUsersTests(ClientFixture fixture) : IClassFixture<Clien
         var createRequest = new CreateUserDto
         {
             Email = email,
-            Password = "1q2w3e$R",
+            Password = Environment.GetEnvironmentVariable("Test:AdminPassword") ?? "1q2w3e$R",
             Permissions = [],
             // The API requests to also set the display name.
             DisplayName = email,

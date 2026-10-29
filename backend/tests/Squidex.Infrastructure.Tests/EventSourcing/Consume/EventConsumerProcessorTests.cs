@@ -76,7 +76,7 @@ public class EventConsumerProcessorTests
             {
                 foreach (var @event in events)
                 {
-                    eventConsumer.On(@event).Wait();
+                    eventConsumer.On(@event).GetAwaiter().GetResult();
                 }
             });
 

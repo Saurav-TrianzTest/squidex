@@ -20,7 +20,7 @@ import { AuthService, FormHintComponent, TranslatePipe, UIOptions } from '@app/s
     ],
 })
 export class HomePageComponent {
-    private readonly redirectToLogin = inject(UIOptions).value.redirectToLogin;
+    private readonly redirectToLogin = inject<UIOptions>(UIOptions).value.redirectToLogin;
 
     public showLoginError = false;
 

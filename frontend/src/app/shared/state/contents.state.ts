@@ -458,7 +458,7 @@ export class ContentsState extends ContentsStateBase {
     }
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ComponentContentsState extends ContentsStateBase {
     public schema!: { name: string };
 

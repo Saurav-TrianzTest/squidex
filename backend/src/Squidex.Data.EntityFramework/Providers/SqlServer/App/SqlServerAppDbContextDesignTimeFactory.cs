@@ -6,6 +6,7 @@
 // ==========================================================================
 
 using System.Text.Json;
+using Amazon.SimpleSystemsManagement;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Squidex.Infrastructure.Json.System;
@@ -16,7 +17,15 @@ public sealed class SqlServerAppDbContextDesignTimeFactory : IDesignTimeDbContex
 {
     public SqlServerAppDbContext CreateDbContext(string[] args)
     {
-        const string ConnectionString = "Server=localhost;Port=14330;Database=test;User=sa;Password=SqlServer2026!?";
+        var host = Environment.GetEnvironmentVariable("Database__Host") ?? "localhost";
+        var port = Environment.GetEnvironmentVariable("Database__Port") ?? "14330";
+        var database = Environment.GetEnvironmentVariable("Database__Name") ?? "test";
+        var user = Environment.GetEnvironmentVariable("Database__User") ?? "sa";
+        var secretName = Environment.GetEnvironmentVariable("Database__SecretName") ?? "/app/db/password";
+
+        var password = GetSecretFromParameterStore(secretName);
+
+        var ConnectionString = $"Server={host},{port};Database={database};User={user};Password={password}";
 
         var builder = new DbContextOptionsBuilder<SqlServerAppDbContext>()
             .UseSqlServer(ConnectionString, options =>
@@ -25,5 +34,24 @@ public sealed class SqlServerAppDbContextDesignTimeFactory : IDesignTimeDbContex
             });
 
         return new SqlServerAppDbContext(builder.Options, new SystemJsonSerializer(JsonSerializerOptions.Default));
+    }
+
+    private static string GetSecretFromParameterStore(string secretName)
+    {
+        try
+        {
+            var ssm = new AmazonSimpleSystemsManagementClient();
+            var response = ssm.GetParameterAsync(new Amazon.SimpleSystemsManagement.Model.GetParameterRequest
+            {
+                Name = secretName,
+                WithDecryption = true
+            }).GetAwaiter().GetResult();
+
+            return response.Parameter?.Value ?? string.Empty;
+        }
+        catch
+        {
+            return string.Empty;
+        }
     }
 }

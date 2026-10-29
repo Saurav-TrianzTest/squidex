@@ -11,6 +11,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, ContentDto, ContentsDto, ContentsService, DateTime, Resource, ScheduleJobDto, Versioned, VersionTag } from '@app/shared/internal';
 import { BulkResultDto, BulkUpdateContentsDto, BulkUpdateContentsJobDto, ResourceLinkDto, ServerErrorDto, StatusInfoDto } from './../model';
 import { sanitize } from './query';
+import { environment } from 'src/environments/environment';
 
 describe('ContentsService', () => {
     const version = new VersionTag('1');
@@ -22,7 +23,7 @@ describe('ContentsService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 ContentsService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

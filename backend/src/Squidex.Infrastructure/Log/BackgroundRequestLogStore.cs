@@ -43,7 +43,7 @@ public sealed class BackgroundRequestLogStore : DisposableObjectBase, IRequestLo
     {
         if (disposing)
         {
-            logTimer.StopAsync().Wait();
+            logTimer.StopAsync().GetAwaiter().GetResult();
         }
     }
 

@@ -32,7 +32,8 @@ function isSafeEditorUrl(url: string) {
 
     // The url is trusted for the iframe, therefore protocols like 'javascript:' would run in our origin.
     try {
-        const protocol = new URL(url, window.location.href).protocol;
+        const baseUrl = typeof window !== 'undefined' ? window.location.href : url;
+        const protocol = new URL(url, baseUrl).protocol;
 
         return protocol === 'http:' || protocol === 'https:';
     } catch {

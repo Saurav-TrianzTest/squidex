@@ -14,7 +14,7 @@ public class ApiUsageTrackerTests
     private readonly IUsageTracker usageTracker = A.Fake<IUsageTracker>();
     private readonly string key = Guid.NewGuid().ToString();
     private readonly string category = Guid.NewGuid().ToString();
-    private readonly DateOnly date = DateTime.Today.ToDateOnly();
+    private readonly DateOnly date = DateOnly.FromDateTime(DateTime.UtcNow);
     private readonly ApiUsageTracker sut;
 
     public ApiUsageTrackerTests()

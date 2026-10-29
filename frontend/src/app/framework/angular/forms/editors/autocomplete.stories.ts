@@ -52,7 +52,7 @@ export default {
             providers: [
                 {
                     provide: LocalizerService,
-                    useFactory: () => new LocalizerService(TRANSLATIONS),
+                    useFactory: (): LocalizerService => new LocalizerService(TRANSLATIONS),
                 },
             ],
         }),

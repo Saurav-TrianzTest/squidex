@@ -17,10 +17,10 @@ import { AuthService, Profile } from '../services/auth.service';
 type InternalFunction = (user: Profile | null, renew: boolean) => Observable<HttpEvent<any>>;
 
 export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
-    const authService = inject(AuthService);
-    const baseUrl = inject(ApiUrlConfig).buildUrl('');
-    const location = inject(Location);
-    const router = inject(Router);
+    const authService = inject<AuthService>(AuthService);
+    const baseUrl = inject<ApiUrlConfig>(ApiUrlConfig).buildUrl('');
+    const location = inject<Location>(Location);
+    const router = inject<Router>(Router);
 
     const makeRequest:InternalFunction = (user, renew) => {
         const token = user?.authorization || '';

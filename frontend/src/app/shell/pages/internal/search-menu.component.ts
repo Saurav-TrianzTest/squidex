@@ -13,7 +13,7 @@ import { Observable, of } from 'rxjs';
 import { ApiUrlConfig, AppsState, AutocompleteComponent, AutocompleteSource, SearchResultDto, SearchService, ShortcutComponent, ShortcutDirective, TooltipDirective, TranslatePipe, Types } from '@app/shared';
 import { AutocompleteComponent as AutocompleteComponent_1 } from '../../../framework/angular/forms/editors/autocomplete.component';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SearchSource implements AutocompleteSource {
     public selectedApp = this.appsState.selectedApp;
 

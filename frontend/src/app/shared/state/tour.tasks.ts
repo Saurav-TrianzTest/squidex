@@ -73,7 +73,7 @@ export function buildTasks() {
             position: 'right-start',
         }],
         onComplete: () => {
-            const appsState = inject(AppsState);
+            const appsState = inject<AppsState>(AppsState);
 
             return appsState.changes.pipe(
                 filter(change =>
@@ -139,7 +139,7 @@ export function buildTasks() {
             position: 'left-start',
         }],
         onComplete: () => {
-            const schemasState = inject(SchemasState);
+            const schemasState = inject<SchemasState>(SchemasState);
 
             return schemasState.changes.pipe(
                 filter(change =>
@@ -191,7 +191,7 @@ export function buildTasks() {
             position: 'left-start',
         }],
         onComplete: () => {
-            const contentsState = inject(ContentsState);
+            const contentsState = inject<ContentsState>(ContentsState);
 
             return contentsState.changes.pipe(
                 filter(change =>
@@ -228,7 +228,7 @@ export function buildTasks() {
             endOnCondition: waitForElement('.panel2.minimized .right'),
         }],
         onComplete: () => {
-            const assetsState = inject(AssetsState);
+            const assetsState = inject<AssetsState>(AssetsState);
 
             return assetsState.changes.pipe(
                 filter(change =>
@@ -268,7 +268,7 @@ export function buildTasks() {
             nextOnAnchorClick: true,
         }],
         onComplete: () => {
-            const messageBus = inject(MessageBus);
+            const messageBus = inject<MessageBus>(MessageBus);
 
             return messageBus.of(ClientTourStated).pipe(take(1));
         },
@@ -301,7 +301,7 @@ export function buildTasks() {
             enableBackdrop: false,
         }],
         onComplete: () => {
-            const messageBus = inject(MessageBus);
+            const messageBus = inject<MessageBus>(MessageBus);
 
             return messageBus.of(QueryExecuted).pipe(take(1));
         },

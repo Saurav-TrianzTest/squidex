@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
 import { ApiUrlConfig, CreateUserDto, IResourceDto, pretifyError, StringHelper, UpdateUserDto, UserDto, UsersDto } from '@app/shared';
 export { UserDto, UsersDto };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UsersService {
     constructor(
         private readonly http: HttpClient,

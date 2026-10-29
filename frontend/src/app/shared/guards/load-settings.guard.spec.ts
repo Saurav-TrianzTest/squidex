@@ -17,7 +17,7 @@ describe('LoadAppsGuard', () => {
     beforeEach(() => {
         uiState = Mock.ofType<UIState>();
 
-        TestBed.configureTestingModule({ providers: [{ provide: UIState, useValue: uiState.object }] });
+        TestBed.configureTestingModule({ providers: [{ provide: UIState, useValue: uiState.object as unknown as UIState }] });
     });
 
     bit('should load apps', async () => {

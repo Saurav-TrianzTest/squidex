@@ -41,7 +41,7 @@ public class ShardedServiceTests
             }
         });
 
-        sut.InitializeAsync(default).Wait();
+        sut.InitializeAsync(default).GetAwaiter().GetResult();
     }
 
     [Fact]

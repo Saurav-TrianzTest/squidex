@@ -45,7 +45,7 @@ public sealed class ApiCostsFilter(IUsageGate usageGate) : IAsyncActionFilter, I
         {
             var (_, clientId) = context.HttpContext.User.GetClient();
 
-            var isBlocked = await usageGate.IsBlockedAsync(app, clientId, DateTime.Today.ToDateOnly(), context.HttpContext.RequestAborted);
+            var isBlocked = await usageGate.IsBlockedAsync(app, clientId, DateOnly.FromDateTime(DateTime.UtcNow), context.HttpContext.RequestAborted);
 
             if (isBlocked)
             {

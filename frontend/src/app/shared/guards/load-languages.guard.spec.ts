@@ -17,7 +17,7 @@ describe('LoadLanguagesGuard', () => {
     beforeEach(() => {
         languagesState = Mock.ofType<LanguagesState>();
 
-        TestBed.configureTestingModule({ providers: [{ provide: LanguagesState, useValue: languagesState.object }] });
+        TestBed.configureTestingModule({ providers: [{ provide: LanguagesState, useValue: languagesState.object as unknown as LanguagesState }] });
     });
 
     bit('should load languages', async () => {

@@ -11,7 +11,7 @@ namespace Squidex.Shared;
 
 public abstract class UsageRepositoryTests
 {
-    private readonly string knownKey = "3e764e15-3cf5-427f-bb6f-f0fa29a40a2d";
+    private readonly string knownKey = Environment.GetEnvironmentVariable("Test:UsageKey") ?? "3e764e15-3cf5-427f-bb6f-f0fa29a40a2d";
     private readonly DateOnly startDate = new DateOnly(2023, 12, 11);
 
     protected abstract Task<IUsageRepository> CreateSutAsync();

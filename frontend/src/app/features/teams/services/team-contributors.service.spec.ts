@@ -11,6 +11,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, ContributorDto, ContributorsDto, Resource, Versioned, VersionTag } from '@app/shared/internal';
 import { AssignContributorDto, ContributorsMetadataDto, ResourceLinkDto } from '@app/shared/model';
 import { TeamContributorsService } from '../internal';
+import { environment } from 'src/environments/environment';
 
 describe('TeamContributorsService', () => {
     const version = new VersionTag('1');
@@ -22,7 +23,7 @@ describe('TeamContributorsService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 TeamContributorsService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

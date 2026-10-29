@@ -117,7 +117,7 @@ public sealed class AppLanguagesController(ICommandBus commandBus) : ApiControll
     {
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<App>();
+        var result = await context.ResultAsync<App>();
         var response = GetResponse(result);
 
         return response;

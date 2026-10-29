@@ -35,7 +35,7 @@ public sealed class TemplateCommandMiddleware(
 
         if (context.IsCompleted && context.Command is CreateApp createApp)
         {
-            await ApplyTemplateAsync(context.Result<App>(), createApp.Template);
+            await ApplyTemplateAsync(await context.ResultAsync<App>(), createApp.Template);
         }
     }
 

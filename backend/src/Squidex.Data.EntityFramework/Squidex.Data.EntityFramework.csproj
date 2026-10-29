@@ -39,6 +39,7 @@
 	<PackageReference Include="PhenX.EntityFrameworkCore.BulkInsert.MySql" Version="0.5.0" />
 	<PackageReference Include="PhenX.EntityFrameworkCore.BulkInsert.PostgreSql" Version="0.5.0" />
 	<PackageReference Include="PhenX.EntityFrameworkCore.BulkInsert.SqlServer" Version="0.5.0" />
+    <PackageReference Include="AWSSDK.SimpleSystemsManagement" Version="3.7.403.17" />
     <PackageReference Include="Microting.EntityFrameworkCore.MySql" Version="10.0.6" />
     <PackageReference Include="Microting.EntityFrameworkCore.MySql.Json.Microsoft" Version="10.0.6" />
     <PackageReference Include="Microting.EntityFrameworkCore.MySql.NetTopologySuite" Version="10.0.6" />

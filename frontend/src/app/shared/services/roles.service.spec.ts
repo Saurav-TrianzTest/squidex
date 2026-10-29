@@ -10,6 +10,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, Resource, RoleDto, RolesDto, RolesService, Versioned, VersionTag } from '@app/shared/internal';
 import { AddRoleDto, ResourceLinkDto, UpdateRoleDto } from './../model';
+import { environment } from 'src/environments/environment';
 
 describe('RolesService', () => {
     const version = new VersionTag('1');
@@ -19,7 +20,7 @@ describe('RolesService', () => {
             imports: [],
             providers: [
                 RolesService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
             ],

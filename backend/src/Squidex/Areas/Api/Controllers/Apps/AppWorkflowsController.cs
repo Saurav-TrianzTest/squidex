@@ -117,7 +117,7 @@ public sealed class AppWorkflowsController(ICommandBus commandBus, IWorkflowsVal
     {
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<App>();
+        var result = await context.ResultAsync<App>();
         var response = await GetResponse(result);
 
         return response;

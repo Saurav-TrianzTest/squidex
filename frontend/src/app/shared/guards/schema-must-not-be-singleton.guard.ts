@@ -13,8 +13,8 @@ import { SchemasState } from '../state/schemas.state';
 
 export const schemaMustNotBeSingletonGuard = (forExtension: boolean) => {
     return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-        const schemasState = inject(SchemasState);
-        const router = inject(Router);
+        const schemasState = inject<SchemasState>(SchemasState);
+        const router = inject<Router>(Router);
 
         const result =
             schemasState.selectedSchema.pipe(

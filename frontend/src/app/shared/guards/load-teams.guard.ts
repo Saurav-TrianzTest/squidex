@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 import { TeamsState } from '../state/teams.state';
 
 export const loadTeamsGuard = () => {
-    const teamsState = inject(TeamsState);
+    const teamsState = inject<TeamsState>(TeamsState);
 
     return teamsState.load().pipe(map(() => true));
 };

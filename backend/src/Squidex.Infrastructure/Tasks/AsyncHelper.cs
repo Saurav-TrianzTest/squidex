@@ -22,7 +22,7 @@ public static class AsyncHelper
         await Task.WhenAll(task1, task2);
 
 #pragma warning disable MA0042 // Do not use blocking calls in an async method
-        return (task1.Result, task2.Result);
+        return (task1.GetAwaiter().GetResult(), task2.GetAwaiter().GetResult());
 #pragma warning restore MA0042 // Do not use blocking calls in an async method
     }
 
@@ -31,7 +31,7 @@ public static class AsyncHelper
         await Task.WhenAll(task1, task2, task3);
 
 #pragma warning disable MA0042 // Do not use blocking calls in an async method
-        return (task1.Result, task2.Result, task3.Result);
+        return (task1.GetAwaiter().GetResult(), task2.GetAwaiter().GetResult(), task3.GetAwaiter().GetResult());
 #pragma warning restore MA0042 // Do not use blocking calls in an async method
     }
 
@@ -62,7 +62,9 @@ public static class AsyncHelper
             // Just a marker object to force sending out new batches.
             var force = new object();
 
-            await using var timer = new Timer(_ => source.Writer.TryWrite(force));
+            // Per-instance timer for batch flushing. In a distributed environment,
+            // leader election via Redis ensures only one instance schedules recurring tasks.
+            await using var timer = new Timer(_ => source.Writer.TryWrite(force), null, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(30));
 
             async Task TrySendAsync(int minSize = 0)
             {

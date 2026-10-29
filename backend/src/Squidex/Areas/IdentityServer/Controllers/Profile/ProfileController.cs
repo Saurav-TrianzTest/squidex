@@ -40,7 +40,7 @@ public sealed class ProfileController(
     {
         var user = await userService.GetAsync(User, HttpContext.RequestAborted);
 
-        return View(await GetVM<None>(user, successMessage: successMessage));
+        return await ViewAsync(await GetVM<None>(user, successMessage: successMessage));
     }
 
     [HttpPost]
@@ -218,7 +218,7 @@ public sealed class ProfileController(
 
         if (!ModelState.IsValid)
         {
-            return View(nameof(Profile), await GetVM(user, model));
+            return await ViewAsync(nameof(Profile), await GetVM(user, model));
         }
 
         string errorMessage;
@@ -239,7 +239,7 @@ public sealed class ProfileController(
             errorMessage = T.Get("users.errorHappened");
         }
 
-        return View(nameof(Profile), await GetVM(user, model, errorMessage));
+        return await ViewAsync(nameof(Profile), await GetVM(user, model, errorMessage));
     }
 
     private async Task<ProfileVM> GetVM<TModel>(IUser? user, TModel? model = null, string? errorMessage = null, string? successMessage = null) where TModel : class

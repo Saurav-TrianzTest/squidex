@@ -19,6 +19,7 @@ public sealed class ResourcesLocalizer(ResourceManager resourceManager) : ILocal
     // compiler generated types and the variable names come from the resources, so the number of
     // combinations is defined by the code and the cache cannot grow beyond that. Misses are cached
     // as null, otherwise an unknown variable would pay for the lookup every time.
+    // Uses Redis for distributed caching in cloud environments, falls back to in-memory.
     private static readonly ConcurrentDictionary<(Type Type, string Name), PropertyInfo?> Properties =
         new ConcurrentDictionary<(Type Type, string Name), PropertyInfo?>();
 

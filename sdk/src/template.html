@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 		<meta charset="utf-8">
 		<title><% preact.title %></title>
 		<meta name="viewport" content="width=device-width,initial-scale=1">
@@ -67,7 +68,12 @@
 			}
 		</style>
 
-		<script src="https://localhost:5001/scripts/test.js"></script>
+		<link rel="dns-prefetch" href="https://cloud.squidex.io">
+		<link rel="dns-prefetch" href="https://assets.squidex.io">
+		<link rel="dns-prefetch" href="https://contents.squidex.io">
+
+		<script src="https://cdn.squidex.io/scripts/test.js" integrity="sha384-test" crossorigin="anonymous"></script>
+		<script src="/scripts/test-fallback.js"></script>
 	</head>
 	<body>
 		<% preact.bodyEnd %>

@@ -152,7 +152,7 @@ public sealed class AppClientsController(ICommandBus commandBus) : ApiController
     {
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<App>();
+        var result = await context.ResultAsync<App>();
         var response = GetResponse(result);
 
         return response;

@@ -11,6 +11,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { firstValueFrom, of } from 'rxjs';
 import { IMock, Mock } from 'typemoq';
 import { ApiUrlConfig, DateTime, formatHistoryMessage, HistoryEventDto, HistoryService, UserDto, UsersProviderService } from '@app/shared/internal';
+import { environment } from 'src/environments/environment';
 
 describe('formatHistoryMessage', () => {
     let userProvider: IMock<UsersProviderService>;
@@ -82,7 +83,7 @@ describe('HistoryService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 HistoryService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

@@ -23,7 +23,7 @@ import { AppsState, AuthService, ChatDialogComponent, DialogModel, ModalDirectiv
 export class ChatMenuComponent {
     public readonly chatDialog = new DialogModel();
 
-    public readonly hasChatBot = inject(UIOptions).value.canUseChatBot;
+    public readonly hasChatBot = inject<UIOptions>(UIOptions).value.canUseChatBot;
 
     constructor(
         public readonly appsState: AppsState,

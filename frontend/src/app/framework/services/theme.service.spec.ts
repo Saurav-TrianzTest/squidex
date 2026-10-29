@@ -43,14 +43,14 @@ describe('ThemeService', () => {
 
         TestBed.configureTestingModule({
             providers: [
-                { provide: DOCUMENT, useValue: fakeDocument },
-                { provide: LocalStoreService, useValue: localStore },
+                { provide: DOCUMENT, useValue: fakeDocument as Document },
+                { provide: LocalStoreService, useValue: localStore as LocalStoreService },
             ],
         });
     });
 
     it('should use light theme from system by default', () => {
-        const themeService = TestBed.inject(ThemeService);
+        const themeService = TestBed.inject<ThemeService>(ThemeService);
 
         expect(themeService.mode).toEqual('system');
         expect(themeService.theme).toEqual('light');
@@ -60,7 +60,7 @@ describe('ThemeService', () => {
     it('should use dark theme from system', () => {
         systemDark = true;
 
-        const themeService = TestBed.inject(ThemeService);
+        const themeService = TestBed.inject<ThemeService>(ThemeService);
 
         expect(themeService.mode).toEqual('system');
         expect(themeService.theme).toEqual('dark');
@@ -70,7 +70,7 @@ describe('ThemeService', () => {
     it('should restore mode from local store', () => {
         localStore.set('squidex.theme', 'dark');
 
-        const themeService = TestBed.inject(ThemeService);
+        const themeService = TestBed.inject<ThemeService>(ThemeService);
 
         expect(themeService.mode).toEqual('dark');
         expect(themeService.theme).toEqual('dark');
@@ -79,13 +79,13 @@ describe('ThemeService', () => {
     it('should ignore invalid mode from local store', () => {
         localStore.set('squidex.theme', 'invalid');
 
-        const themeService = TestBed.inject(ThemeService);
+        const themeService = TestBed.inject<ThemeService>(ThemeService);
 
         expect(themeService.mode).toEqual('system');
     });
 
     it('should store and apply mode', () => {
-        const themeService = TestBed.inject(ThemeService);
+        const themeService = TestBed.inject<ThemeService>(ThemeService);
 
         themeService.setMode('dark');
 
@@ -95,14 +95,14 @@ describe('ThemeService', () => {
     });
 
     it('should get color from CSS variable', () => {
-        const themeService = TestBed.inject(ThemeService);
+        const themeService = TestBed.inject<ThemeService>(ThemeService);
 
         expect(themeService.getColor('progress')).toEqual('#3d7dd5');
         expect(themeService.getColor('unknown')).toEqual('');
     });
 
     it('should follow system changes if mode is system', () => {
-        const themeService = TestBed.inject(ThemeService);
+        const themeService = TestBed.inject<ThemeService>(ThemeService);
 
         const themes: Theme[] = [];
 
@@ -117,7 +117,7 @@ describe('ThemeService', () => {
     });
 
     it('should not follow system changes if mode is explicit', () => {
-        const themeService = TestBed.inject(ThemeService);
+        const themeService = TestBed.inject<ThemeService>(ThemeService);
 
         themeService.setMode('light');
 

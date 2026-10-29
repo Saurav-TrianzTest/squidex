@@ -44,7 +44,13 @@ public class AnonymousTests(ClientFixture fixture) : IClassFixture<ClientFixture
 
         using (var httpClient = new HttpClient())
         {
-            var response = await httpClient.GetAsync(url);
+            var retryPolicy = Polly.Policy
+                .Handle<HttpRequestException>()
+                .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.ServiceUnavailable)
+                .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+            var response = await retryPolicy.ExecuteAsync(() => httpClient.GetAsync(url));
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
@@ -87,7 +93,13 @@ public class AnonymousTests(ClientFixture fixture) : IClassFixture<ClientFixture
 
         using (var httpClient = new HttpClient())
         {
-            var response = await httpClient.PostAsync(url, new StringContent("{}", null, "text/json"));
+            var retryPolicy = Polly.Policy
+                .Handle<HttpRequestException>()
+                .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.ServiceUnavailable)
+                .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+            var response = await retryPolicy.ExecuteAsync(() => httpClient.PostAsync(url, new StringContent("{}", null, "text/json")));
 
             Assert.Equal(HttpStatusCode.Created, response.StatusCode);
         }

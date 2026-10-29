@@ -10,6 +10,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { inject, TestBed } from '@angular/core/testing';
 import { AccessTokenDto, ApiUrlConfig, ClientDto, ClientsDto, ClientsService, Resource, Versioned, VersionTag } from '@app/shared/internal';
 import { CreateClientDto, ResourceLinkDto, UpdateClientDto } from '../model';
+import { environment } from 'src/environments/environment';
 
 describe('ClientsService', () => {
     const version = new VersionTag('1');
@@ -21,7 +22,7 @@ describe('ClientsService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 ClientsService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

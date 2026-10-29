@@ -73,8 +73,8 @@ export class ContentFieldComponent {
     public isDisabled?: Observable<boolean>;
     public isSelected = new BehaviorSubject<boolean>(false);
 
-    public readonly hasTranslator = inject(UIOptions).value.canUseTranslator;
-    public readonly hasChatBot = inject(UIOptions).value.canUseChatBot;
+    public readonly hasTranslator = inject<UIOptions>(UIOptions).value.canUseTranslator;
+    public readonly hasChatBot = inject<UIOptions>(UIOptions).value.canUseChatBot;
 
     @HostBinding('class')
     public get class() {

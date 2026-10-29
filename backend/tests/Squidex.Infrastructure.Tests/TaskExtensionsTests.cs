@@ -19,7 +19,7 @@ public class TaskExtensionsTests
         task.Forget();
 
 #pragma warning disable xUnit1031 // Do not use blocking task operations in test method
-        Assert.Equal(123, task.Result);
+        Assert.Equal(123, task.GetAwaiter().GetResult());
 #pragma warning restore xUnit1031 // Do not use blocking task operations in test method
     }
 }

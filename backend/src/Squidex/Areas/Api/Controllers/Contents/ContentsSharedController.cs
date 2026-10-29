@@ -208,7 +208,7 @@ public sealed class ContentsSharedController(
 
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<BulkUpdateResult>();
+        var result = await context.ResultAsync<BulkUpdateResult>();
         var response = result.Select(x => BulkResultDto.FromDomain(x, HttpContext)).ToArray();
 
         return Ok(response);

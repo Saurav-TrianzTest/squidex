@@ -27,7 +27,7 @@ public sealed class DefaultKeyStore(ISnapshotStore<DefaultKeyStore.State> store)
 
     public void Configure(OpenIddictServerOptions options)
     {
-        var securityKey = GetOrCreateKeyAsync().Result;
+        var securityKey = GetOrCreateKeyAsync().GetAwaiter().GetResult();
 
         options.SigningCredentials.Add(
             new SigningCredentials(securityKey,

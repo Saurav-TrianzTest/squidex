@@ -36,7 +36,7 @@ public sealed class DefaultXmlRepository(ISnapshotStore<DefaultXmlRepository.Sta
 
     public IReadOnlyCollection<XElement> GetAllElements()
     {
-        return GetAllElementsAsync().Result;
+        return GetAllElementsAsync().GetAwaiter().GetResult();
     }
 
     public void StoreElement(XElement element, string friendlyName)

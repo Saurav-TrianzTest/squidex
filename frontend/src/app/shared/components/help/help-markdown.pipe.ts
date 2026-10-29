@@ -6,6 +6,7 @@
  */
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { marked, Renderer, Tokens } from 'marked';
 
 class HelpRenderer extends Renderer {
@@ -14,7 +15,7 @@ class HelpRenderer extends Renderer {
     public link({ href, tokens }: Tokens.Link): string {
         const text = this.parser.parseInline(tokens);
         if (href && !href.startsWith('http')) {
-            href = `https://docs.squidex.io/${href}`;
+            href = `${environment.docsUrl || 'https://docs.squidex.io'}/${href}`;
         }
 
         return `<a href="${href}" target="_blank", rel="noopener">${text} <i class="icon-external-link"></i></a>`;

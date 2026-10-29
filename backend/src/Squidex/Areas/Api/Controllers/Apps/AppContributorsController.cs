@@ -115,7 +115,7 @@ public sealed class AppContributorsController(ICommandBus commandBus, IUsageGate
         }
         else
         {
-            return await GetResponseAsync(context.Result<App>(), false);
+            return await GetResponseAsync(await context.ResultAsync<App>(), false);
         }
     }
 

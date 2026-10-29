@@ -344,6 +344,12 @@ public static class ClientExtensions
         {
             httpClient.BaseAddress = new Uri(fixture.Url);
 
+            var retryPolicy = Polly.Policy
+                .Handle<HttpRequestException>()
+                .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.ServiceUnavailable)
+                .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
             var url = asset.Links["content"].Href[1..];
 
             if (version > 0)

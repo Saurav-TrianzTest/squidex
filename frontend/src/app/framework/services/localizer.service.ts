@@ -8,7 +8,7 @@
 import { Injectable } from '@angular/core';
 import { compareStrings } from '../utils/array-helper';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class LocalizerService {
     constructor(
         private readonly translations: Object,

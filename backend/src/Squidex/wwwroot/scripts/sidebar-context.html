@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
     <meta charset="utf-8">
 
     <!-- Load the editor sdk from the local folder or https://cloud.squidex.io/scripts/editor-sdk.js -->
@@ -22,30 +23,9 @@
 </head>
 
 <body>
-    <script>
-        function grow(element) {
-            element.style.height = "5px";
-            element.style.height = (element.scrollHeight)+"px";
-        }
-    </script>
+    <textarea class="form-control" id="editor"></textarea>
 
-    <textarea class="form-control" oninput="grow(this)" id="editor"></textarea>
-
-    <script>
-        var element = document.getElementById('editor');
-
-        // When the field is instantiated it notifies the UI that it has been loaded.
-        // 
-        // Furthermore it sends the current size to the parent.
-        var plugin = new SquidexPlugin();
-
-        // Init is called once with a context that contains the app name, schema name and authentication information.
-        plugin.onInit(function (context) {
-            element.innerHTML = JSON.stringify(context, null, 2);
-
-            grow(element);
-        });
-    </script>
+    <script src="scripts/sidebar-context.js"></script>
 </body>
 
 </html>

@@ -6,6 +6,7 @@
  */
 
 import { ValidatorFn, Validators } from '@angular/forms';
+import { environment } from '../../environments/environment';
 import { DateTime, Types, ValidatorsEx } from '@app/framework';
 import { AppLanguageDto, ContentDto, FieldDto, NestedFieldDto, UserInfoFieldPropertiesDto } from '../model';
 import { ArrayFieldPropertiesDto, AssetsFieldPropertiesDto, BooleanFieldPropertiesDto, ComponentFieldPropertiesDto, ComponentsFieldPropertiesDto, DateTimeFieldPropertiesDto, fieldInvariant, FieldPropertiesVisitor, GeolocationFieldPropertiesDto, JsonFieldPropertiesDto, NumberFieldPropertiesDto, ReferencesFieldPropertiesDto, RichTextFieldPropertiesDto, StringFieldPropertiesDto, TagsFieldPropertiesDto, UIFieldPropertiesDto } from '../model';
@@ -296,7 +297,8 @@ export class FieldFormatter implements FieldPropertiesVisitor<FieldValue> {
 }
 
 export function thumbnail(url: string, width?: number, height?: number) {
-    if (url && url.startsWith('https://images.unsplash.com')) {
+    const unsplashUrl = environment.unsplashUrl || 'https://images.unsplash.com';
+    if (url && url.startsWith(unsplashUrl)) {
         if (width) {
             return `${url}&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=${width}&fit=max`;
         }

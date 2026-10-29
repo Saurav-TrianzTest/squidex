@@ -17,7 +17,7 @@ describe('LoadTeamsGuard', () => {
     beforeEach(() => {
         teamsState = Mock.ofType<TeamsState>();
 
-        TestBed.configureTestingModule({ providers: [{ provide: TeamsState, useValue: teamsState.object }] });
+        TestBed.configureTestingModule({ providers: [{ provide: TeamsState, useValue: teamsState.object as unknown as TeamsState }] });
     });
 
     bit('should load teams', async () => {

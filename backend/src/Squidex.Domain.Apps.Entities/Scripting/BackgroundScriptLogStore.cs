@@ -46,7 +46,7 @@ public sealed class BackgroundScriptLogStore : DisposableObjectBase, IScriptLogS
     {
         if (disposing)
         {
-            timer.StopAsync().Wait();
+            timer.StopAsync().GetAwaiter().GetResult();
         }
     }
 

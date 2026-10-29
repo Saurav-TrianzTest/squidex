@@ -28,7 +28,7 @@ type Editor = AceAjax.Editor & { completers?: AceAjax.Completer[]; completer?: {
 })
 export class CodeEditorComponent extends StatefulControlComponent<{}, any> implements AfterViewInit, FocusComponent {
     private readonly subscriptions = new Subscriptions();
-    private readonly themeService = inject(ThemeService);
+    private readonly themeService = inject<ThemeService>(ThemeService);
     private aceModes?: ModeList;
     private aceEditor?: Editor;
     private aceTools = false;

@@ -84,11 +84,11 @@ export default {
             providers: [
                 {
                     provide: LocalizerService,
-                    useFactory: () => new LocalizerService(translations),
+                    useFactory: (): LocalizerService => new LocalizerService(translations),
                 },
                 {
                     provide: UIOptions,
-                    useFactory: () => new UIOptions({}),
+                    useFactory: (): UIOptions => new UIOptions({}),
                 },
             ],
         }),

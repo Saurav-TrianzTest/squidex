@@ -48,8 +48,8 @@ interface State {
     ],
 })
 export class DateTimeEditorComponent extends StatefulControlComponent<State, string | null> implements FocusComponent {
-    private readonly hideDateButtonsSettings: boolean = !!inject(UIOptions).value.hideDateButtons;
-    private readonly hideDateTimeModeButtonSetting: boolean = !!inject(UIOptions).value.hideDateTimeModeButton;
+    private readonly hideDateButtonsSettings: boolean = !!inject<UIOptions>(UIOptions).value.hideDateButtons;
+    private readonly hideDateTimeModeButtonSetting: boolean = !!inject<UIOptions>(UIOptions).value.hideDateTimeModeButton;
 
     @Output()
     public editorBlur = new EventEmitter();

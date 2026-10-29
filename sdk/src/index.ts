@@ -21,6 +21,10 @@ function renderStyles() {
         return;
     }
 
+    if (typeof document === 'undefined') {
+        return;
+    }
+
     const styleElement = document.createElement('link');
 
     styleElement.rel = 'stylesheet';

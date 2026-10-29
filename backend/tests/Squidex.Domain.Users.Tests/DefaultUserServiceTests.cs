@@ -288,7 +288,7 @@ public class DefaultUserServiceTests
 
         var values = new UserValues
         {
-            Password = "password",
+            Password = Environment.GetEnvironmentVariable("Test:Password") ?? "password",
         };
 
         SetupCreation(identity, 1);
@@ -343,7 +343,7 @@ public class DefaultUserServiceTests
     {
         var update = new UserValues
         {
-            Password = "password",
+            Password = Environment.GetEnvironmentVariable("Test:Password") ?? "password",
         };
 
         var identity = CreateIdentity(found: true);
@@ -420,7 +420,7 @@ public class DefaultUserServiceTests
     [Fact]
     public async Task SetPassword_should_throw_exception_if_not_found()
     {
-        var password = "password";
+        var password = Environment.GetEnvironmentVariable("Test:Password") ?? "password";
 
         var identity = CreateIdentity(found: false);
 
@@ -430,7 +430,7 @@ public class DefaultUserServiceTests
     [Fact]
     public async Task SetPassword_should_succeed_if_found()
     {
-        var password = "password";
+        var password = Environment.GetEnvironmentVariable("Test:Password") ?? "password";
 
         var identity = CreateIdentity(found: true);
 
@@ -443,7 +443,7 @@ public class DefaultUserServiceTests
     [Fact]
     public async Task SetPassword_should_change_password_if_identity_has_password()
     {
-        var password = "password";
+        var password = Environment.GetEnvironmentVariable("Test:Password") ?? "password";
 
         var identity = CreateIdentity(found: true);
 

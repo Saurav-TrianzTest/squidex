@@ -16,7 +16,7 @@ import { AssignTeamContributorForm } from '../../internal';
 import { TeamContributorsState } from '../../state/team-contributors.state';
 import { ImportContributorsDialogComponent } from './import-contributors-dialog.component';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UsersDataSource implements AutocompleteSource {
     constructor(
         private readonly contributorsState: TeamContributorsState,

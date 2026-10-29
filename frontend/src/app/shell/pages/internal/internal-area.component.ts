@@ -37,7 +37,7 @@ import { SearchMenuComponent } from './search-menu.component';
 export class InternalAreaComponent implements OnInit {
     private readonly subscriptions = new Subscriptions();
 
-    public readonly isEmbedded = inject(UIOptions).value.embedded;
+    public readonly isEmbedded = inject<UIOptions>(UIOptions).value.embedded;
 
     constructor(
         public readonly loadingService: LoadingService,

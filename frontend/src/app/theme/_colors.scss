@@ -11,7 +11,7 @@
         @return color.adjust($color, $lightness: $amount);
     }
 
-    @return unquote('hsl(from #{$color} h s calc(l + #{math.div($amount, 1%)} * var(--sqx-shade)))');
+    @return unquote('hsl(from #{$color} h s calc(l + #{math.div($amount, 1%)} * var(--sqx-shade, #000)))');
 }
 
 @function fade($color, $alpha) {
@@ -119,22 +119,22 @@ $theme-dark: (
     'editor-accent':                #3389ff,
 );
 
-$color-background:          var(--sqx-background);
-$color-surface:             var(--sqx-surface);
+$color-background:          var(--sqx-background, #f5f6f9);
+$color-surface:             var(--sqx-surface, #fff);
 
-$color-border:              var(--sqx-border);
-$color-border-light:        var(--sqx-border-light);
-$color-border-lighter:      var(--sqx-border-lighter);
-$color-border-dark:         var(--sqx-border-dark);
-$color-border-darker:       var(--sqx-border-darker);
+$color-border:              var(--sqx-border, #dedfe3);
+$color-border-light:        var(--sqx-border-light, #f5f6f9);
+$color-border-lighter:      var(--sqx-border-lighter, #f5f6f9);
+$color-border-dark:         var(--sqx-border-dark, #e7e8ea);
+$color-border-darker:       var(--sqx-border-darker, #dedfe3);
 
-$color-title:               var(--sqx-title);
-$color-text:                var(--sqx-text);
-$color-text-decent:         var(--sqx-text-decent);
+$color-title:               var(--sqx-title, #000);
+$color-text:                var(--sqx-text, #373a3c);
+$color-text-decent:         var(--sqx-text-decent, #41444c);
 $color-tooltip:             #1a2129;
 
-$color-code-background:     var(--sqx-code-background);
-$color-code-text:           var(--sqx-code-text);
+$color-code-background:     var(--sqx-code-background, #f5f7f9);
+$color-code-text:           var(--sqx-code-text, #708090);
 
 $color-extern-github:       #353535;
 $color-extern-google:       #d34836;
@@ -145,8 +145,8 @@ $color-extern-oidc:         #526484;
 $color-theme-brand:         #3389ff;
 $color-theme-brand-dark:    #3284f4;
 $color-theme-brand-darker:  #2f7deb;
-$color-theme-brand-light:   var(--sqx-theme-brand-light);
-$color-theme-secondary:     var(--sqx-theme-secondary);
+$color-theme-brand-light:   var(--sqx-theme-brand-light, #d9e8fc);
+$color-theme-secondary:     var(--sqx-theme-secondary, #e0e1e5);
 
 $color-theme-error:         #eb3142;
 $color-theme-error-dark:    #c00;
@@ -159,34 +159,34 @@ $color-theme-warning:       #ffb136;
 $color-black:   #000;
 $color-white:   #fff;
 
-$color-input:               var(--sqx-input);
-$color-input-background:    var(--sqx-input-background);
-$color-input-disabled:      var(--sqx-input-disabled);
-$color-input-placeholder:   var(--sqx-input-placeholder);
+$color-input:               var(--sqx-input, #e0e1e5);
+$color-input-background:    var(--sqx-input-background, #fff);
+$color-input-disabled:      var(--sqx-input-disabled, #eff1f4);
+$color-input-placeholder:   var(--sqx-input-placeholder, #41444c);
 $color-input-shortcut:      rgba(255, 255, 255, .2);
 
-$color-badge-success-background:    var(--sqx-badge-success-background);
-$color-badge-success-foreground:    var(--sqx-badge-success-foreground);
+$color-badge-success-background:    var(--sqx-badge-success-background, #e4f6e6);
+$color-badge-success-foreground:    var(--sqx-badge-success-foreground, #42a54c);
 
-$color-badge-warning-background:    var(--sqx-badge-warning-background);
-$color-badge-warning-foreground:    var(--sqx-badge-warning-foreground);
+$color-badge-warning-background:    var(--sqx-badge-warning-background, #ffe8cc);
+$color-badge-warning-foreground:    var(--sqx-badge-warning-foreground, #d18c3e);
 
-$color-badge-danger-background:     var(--sqx-badge-danger-background);
-$color-badge-danger-foreground:     var(--sqx-badge-danger-foreground);
+$color-badge-danger-background:     var(--sqx-badge-danger-background, #fce0e3);
+$color-badge-danger-foreground:     var(--sqx-badge-danger-foreground, #e56471);
 
-$color-badge-info-background:       var(--sqx-badge-info-background);
-$color-badge-info-foreground:       var(--sqx-badge-info-foreground);
+$color-badge-info-background:       var(--sqx-badge-info-background, #d0f2fb);
+$color-badge-info-foreground:       var(--sqx-badge-info-foreground, #3bb1cc);
 
-$color-badge-primary-background:    var(--sqx-badge-primary-background);
-$color-badge-primary-foreground:    var(--sqx-badge-primary-foreground);
+$color-badge-primary-background:    var(--sqx-badge-primary-background, #cce1ff);
+$color-badge-primary-foreground:    var(--sqx-badge-primary-foreground, #4186e0);
 
-$color-badge-secondary-background:  var(--sqx-badge-secondary-background);
-$color-badge-secondary-foreground:  var(--sqx-badge-secondary-foreground);
+$color-badge-secondary-background:  var(--sqx-badge-secondary-background, #e6e6e6);
+$color-badge-secondary-foreground:  var(--sqx-badge-secondary-foreground, #555);
 
-$color-hint-background:             var(--sqx-hint-background);
-$color-shadow:                      var(--sqx-shadow);
-$color-field-line:                  var(--sqx-field-line);
-$color-alert-light-background:      var(--sqx-alert-light-background);
+$color-hint-background:             var(--sqx-hint-background, #3389ff);
+$color-shadow:                      var(--sqx-shadow, rgba(0, 0, 0, 20%));
+$color-field-line:                  var(--sqx-field-line, #c7cfd7);
+$color-alert-light-background:      var(--sqx-alert-light-background, #fcfeff);
 
 // Shadows and overlays.
 $color-input-shadow:                rgb(0 0 0 / 8%);

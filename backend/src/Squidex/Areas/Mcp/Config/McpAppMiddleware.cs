@@ -77,6 +77,6 @@ public sealed class McpAppMiddleware(RequestDelegate next)
     {
         var (_, clientId) = httpContext.User.GetClient();
 
-        return usageGate.IsBlockedAsync(app, clientId, DateTime.Today.ToDateOnly(), httpContext.RequestAborted);
+        return usageGate.IsBlockedAsync(app, clientId, DateOnly.FromDateTime(DateTime.UtcNow), httpContext.RequestAborted);
     }
 }

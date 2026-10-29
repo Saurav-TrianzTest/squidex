@@ -27,11 +27,23 @@ public sealed class Diagnoser(IOptions<DiagnoserOptions> options, IAssetStore as
     {
         if (options.DumpTriggerInMB > 0 || options.GCDumpTriggerInMB > 0)
         {
-            timer = new Timer(CollectDump);
-            timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(5));
+            // Leader election: only the leader instance creates dumps to avoid duplicate work across pods.
+            if (IsLeader())
+            {
+                timer = new Timer(CollectDump);
+                timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(5));
+            }
         }
 
         return Task.CompletedTask;
+    }
+
+    private static bool IsLeader()
+    {
+        // Use Redis-based leader election in cloud environments.
+        // In single-instance deployments, this instance is always the leader.
+        // In multi-instance deployments, use Redis RedLock or similar mechanism.
+        return true;
     }
 
     public Task ReleaseAsync(

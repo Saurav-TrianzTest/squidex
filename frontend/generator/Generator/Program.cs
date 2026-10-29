@@ -10,12 +10,18 @@ internal partial class Program
 {
     static async Task Main(string[] args)
     {
-        var cacheFile = "cache.json";
+            var cacheFile = Path.Combine(Path.GetTempPath(), "generator-cache.json");
 
         if (!File.Exists(cacheFile) || !args.Contains("--cache"))
         {
+            var retryPolicy = Polly.Policy
+                .Handle<HttpRequestException>()
+                .OrResult<HttpResponseMessage>(r => r.StatusCode == System.Net.HttpStatusCode.ServiceUnavailable)
+                .OrResult<HttpResponseMessage>(r => r.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
             var httpClient = new HttpClient();
-            var schemaResponse = await httpClient.GetAsync("https://localhost:5001/api/swagger/v1/swagger.json");
+            var schemaResponse = await retryPolicy.ExecuteAsync(() => httpClient.GetAsync("https://localhost:5001/api/swagger/v1/swagger.json"));
             var schemaText = await schemaResponse.Content.ReadAsStringAsync();
 
             File.WriteAllText(cacheFile, schemaText);

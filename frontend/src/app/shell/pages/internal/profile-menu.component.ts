@@ -49,7 +49,7 @@ export class ProfileMenuComponent extends StatefulComponent<State> implements On
 
     public readonly modalMenu = new ModalModel();
 
-    public readonly language = inject(UIOptions).value.culture;
+    public readonly language = inject<UIOptions>(UIOptions).value.culture;
     public readonly languages = UILanguages.ALL;
 
     public readonly themeModes: ReadonlyArray<{ mode: ThemeMode; label: string }> = [

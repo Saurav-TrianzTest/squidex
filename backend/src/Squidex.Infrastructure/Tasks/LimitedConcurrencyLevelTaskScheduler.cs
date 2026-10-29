@@ -9,10 +9,10 @@ namespace Squidex.Infrastructure.Tasks;
 
 internal sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
 {
-    [ThreadStatic]
-    private static bool currentThreadIsProcessingItems;
+    private static readonly AsyncLocal<bool> currentThreadIsProcessingItems = new AsyncLocal<bool>();
     private readonly LinkedList<Task> tasks = new LinkedList<Task>();
     private readonly int maxDegreeOfParallelism;
+    private readonly CancellationTokenSource shutdownCts = new CancellationTokenSource();
     private int delegatesQueuedOrRunning;
 
     public override int MaximumConcurrencyLevel => maxDegreeOfParallelism;
@@ -43,10 +43,10 @@ internal sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
     {
         ThreadPool.UnsafeQueueUserWorkItem(_ =>
         {
-            currentThreadIsProcessingItems = true;
+            currentThreadIsProcessingItems.Value = true;
             try
             {
-                while (true)
+                while (!shutdownCts.Token.IsCancellationRequested)
                 {
                     Task task;
 
@@ -70,7 +70,7 @@ internal sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
             }
             finally
             {
-                currentThreadIsProcessingItems = false;
+                currentThreadIsProcessingItems.Value = false;
             }
         }, null);
     }
@@ -78,7 +78,7 @@ internal sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
     protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
     {
         // If this thread isn't already processing a task, we don't support inlining
-        if (!currentThreadIsProcessingItems)
+        if (!currentThreadIsProcessingItems.Value)
         {
             return false;
         }
@@ -104,6 +104,11 @@ internal sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
         {
             return tasks.Remove(task);
         }
+    }
+
+    public void Shutdown()
+    {
+        shutdownCts.Cancel();
     }
 
     protected override IEnumerable<Task> GetScheduledTasks()

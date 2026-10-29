@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 import { LanguagesState } from '@app/shared/internal';
 
 export const loadLanguagesGuard = () => {
-    const languagesState = inject(LanguagesState);
+    const languagesState = inject<LanguagesState>(LanguagesState);
 
     return languagesState.load().pipe(map(_ => true));
 };

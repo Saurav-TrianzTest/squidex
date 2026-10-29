@@ -81,7 +81,13 @@ public class CDNTests(ClientCloudFixture fixture) : IClassFixture<ClientCloudFix
     {
         using (var client = new HttpClient())
         {
-            var response = await client.GetAsync(url);
+            var retryPolicy = Polly.Policy
+                .Handle<HttpRequestException>()
+                .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.ServiceUnavailable)
+                .OrResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
+                .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+
+            var response = await retryPolicy.ExecuteAsync(() => client.GetAsync(url));
 
             response.EnsureSuccessStatusCode();
 

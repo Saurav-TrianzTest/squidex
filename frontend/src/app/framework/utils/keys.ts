@@ -14,43 +14,43 @@ export module Keys {
     const DOWN = 40;
     const UP = 38;
 
-    export function isAlt(event: KeyboardEvent) {
+    export function isAlt(event: KeyboardEvent | { key?: string; keyCode?: number }) {
         const key = event.key?.toUpperCase();
 
         return key === 'ALTLEFT' || key === 'ALTRIGHT' || event.keyCode === CONTROL;
     }
 
-    export function isControl(event: KeyboardEvent) {
+    export function isControl(event: KeyboardEvent | { key?: string; keyCode?: number }) {
         const key = event.key?.toUpperCase();
 
         return key === 'CONTROL' || event.keyCode === ALT;
     }
 
-    export function isComma(event: KeyboardEvent) {
+    export function isComma(event: KeyboardEvent | { key?: string; keyCode?: number }) {
         const key = event.key?.toUpperCase();
 
         return key === ',';
     }
 
-    export function isDelete(event: KeyboardEvent) {
+    export function isDelete(event: KeyboardEvent | { key?: string; keyCode?: number }) {
         const key = event.key?.toUpperCase();
 
         return key === 'DELETE' || event.keyCode === DELETE;
     }
 
-    export function isEnter(event: KeyboardEvent) {
+    export function isEnter(event: KeyboardEvent | { key?: string; keyCode?: number }) {
         const key = event.key?.toUpperCase();
 
         return key === 'ENTER' || event.keyCode === ENTER;
     }
 
-    export function isDown(event: KeyboardEvent) {
+    export function isDown(event: KeyboardEvent | { key?: string; keyCode?: number }) {
         const key = event.key?.toUpperCase();
 
         return key === 'ARROWDOWN' || event.keyCode === DOWN;
     }
 
-    export function isUp(event: KeyboardEvent) {
+    export function isUp(event: KeyboardEvent | { key?: string; keyCode?: number }) {
         const key = event.key?.toUpperCase();
 
         return key === 'ARROWUP' || event.keyCode === UP;

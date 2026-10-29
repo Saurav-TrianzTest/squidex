@@ -43,7 +43,7 @@ public class SetupController(
             return RedirectToReturnUrl(null);
         }
 
-        return View(nameof(Setup), await GetVM(None.Value));
+        return await ViewAsync(nameof(Setup), await GetVM(None.Value));
     }
 
     [HttpPost]
@@ -57,7 +57,7 @@ public class SetupController(
 
         if (!ModelState.IsValid)
         {
-            return View(nameof(Setup), await GetVM(model));
+            return await ViewAsync(nameof(Setup), await GetVM(model));
         }
 
         string errorMessage;
@@ -81,7 +81,7 @@ public class SetupController(
             errorMessage = T.Get("users.errorHappened");
         }
 
-        return View(nameof(Setup), await GetVM(model, errorMessage));
+        return await ViewAsync(nameof(Setup), await GetVM(model, errorMessage));
     }
 
     private async Task<SetupVM> GetVM<TModel>(TModel? model = null, string? errorMessage = null) where TModel : class

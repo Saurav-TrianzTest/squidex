@@ -45,7 +45,7 @@ export interface Comment {
     to?: number;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CommentsState implements OnDestroy {
     private readonly subscription: Subscription;
     private readonly comments = new BehaviorSubject<SharedArray<Comment>>(null!);

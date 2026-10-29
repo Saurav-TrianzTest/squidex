@@ -83,7 +83,7 @@ public sealed class UsageTrackerWorker : IMessageHandler<UsageTrackingMessage>, 
 
     public async Task CheckUsagesAsync()
     {
-        var today = DateTime.Today;
+        var today = DateTime.UtcNow.Date;
 
         foreach (var (key, target) in state.Value.Targets)
         {

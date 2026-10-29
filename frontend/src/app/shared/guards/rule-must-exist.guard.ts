@@ -12,9 +12,9 @@ import { allParams } from '@app/framework';
 import { RulesState } from '../state/rules.state';
 
 export const ruleMustExistGuard = (route: ActivatedRouteSnapshot) => {
-    const rulesState = inject(RulesState);
+    const rulesState = inject<RulesState>(RulesState);
     const ruleId = allParams(route)['ruleId'];
-    const router = inject(Router);
+    const router = inject<Router>(Router);
 
     if (!ruleId || ruleId === 'new') {
         return rulesState.select(null).pipe(map(u => u === null));

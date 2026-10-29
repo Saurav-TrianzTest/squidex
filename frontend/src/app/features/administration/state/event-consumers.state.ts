@@ -16,7 +16,7 @@ interface Snapshot extends LoadingState {
     eventConsumers: ReadonlyArray<EventConsumerDto>;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EventConsumersState extends State<Snapshot> {
     public eventConsumers =
         this.project(x => x.eventConsumers);

@@ -45,30 +45,30 @@ public sealed class AccountController(
 
     [HttpGet]
     [Route("account/lockedout/")]
-    public IActionResult LockedOut()
+    public async Task<IActionResult> LockedOut()
     {
-        return View();
+        return await ViewAsync();
     }
 
     [HttpGet]
     [Route("account/accessdenied/")]
-    public IActionResult AccessDenied()
+    public async Task<IActionResult> AccessDenied()
     {
-        return View();
+        return await ViewAsync();
     }
 
     [HttpGet]
     [Route("account/logout-completed/")]
-    public IActionResult LogoutCompleted()
+    public async Task<IActionResult> LogoutCompleted()
     {
-        return View();
+        return await ViewAsync();
     }
 
     [HttpGet]
     [Route("account/consent/")]
-    public IActionResult Consent(string? returnUrl = null)
+    public async Task<IActionResult> Consent(string? returnUrl = null)
     {
-        return View(new ConsentVM { PrivacyUrl = identityOptions.PrivacyUrl, ReturnUrl = returnUrl });
+        return await ViewAsync(new ConsentVM { PrivacyUrl = identityOptions.PrivacyUrl, ReturnUrl = returnUrl });
     }
 
     [HttpPost]
@@ -90,7 +90,7 @@ public sealed class AccountController(
         {
             var vm = new ConsentVM { PrivacyUrl = identityOptions.PrivacyUrl, ReturnUrl = returnUrl };
 
-            return View(vm);
+            return await ViewAsync(vm);
         }
 
         // There is almost no case where this could have happened.
@@ -148,7 +148,7 @@ public sealed class AccountController(
 
         if (!result.Succeeded && result.IsLockedOut)
         {
-            return View(nameof(LockedOut));
+            return await ViewAsync(nameof(LockedOut));
         }
         else if (!result.Succeeded)
         {
@@ -219,7 +219,7 @@ public sealed class AccountController(
             ReturnUrl = returnUrl,
         };
 
-        return View(nameof(Login), vm);
+        return await ViewAsync(nameof(Login), vm);
     }
 
     [HttpPost]
@@ -248,7 +248,7 @@ public sealed class AccountController(
 
         if (!result.Succeeded && result.IsLockedOut)
         {
-            return View(nameof(LockedOut));
+            return await ViewAsync(nameof(LockedOut));
         }
 
         var isLoggedIn = result.Succeeded;
@@ -312,7 +312,7 @@ public sealed class AccountController(
 
         if (isLocked)
         {
-            return View(nameof(LockedOut));
+            return await ViewAsync(nameof(LockedOut));
         }
         else if (!isLoggedIn)
         {

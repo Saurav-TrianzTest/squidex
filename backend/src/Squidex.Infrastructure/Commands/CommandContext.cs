@@ -42,4 +42,9 @@ public sealed class CommandContext
     {
         return (T)PlainResult!;
     }
+
+    public Task<T> ResultAsync<T>()
+    {
+        return Task.FromResult((T)PlainResult!);
+    }
 }

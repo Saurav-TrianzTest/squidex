@@ -9,6 +9,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { inject, TestBed } from '@angular/core/testing';
 import { AddFieldDto, ApiUrlConfig, ArrayFieldPropertiesDto, AssetsFieldPropertiesDto, BooleanFieldPropertiesDto, ChangeCategoryDto, ComponentFieldPropertiesDto, ComponentsFieldPropertiesDto, ConfigureFieldRulesDto, ConfigureUIFieldsDto, createProperties, CreateSchemaDto, DateTime, DateTimeFieldPropertiesDto, ExportContentsDto, FieldDto, FieldRuleDto, GenerateSchemaDto, GenerateSchemaResponseDto, GeolocationFieldPropertiesDto, JsonFieldPropertiesDto, MigrateContentsDto, NestedFieldDto, NumberFieldPropertiesDto, ReferencesFieldPropertiesDto, Resource, ResourceLinkDto, SchemaDto, SchemaPropertiesDto, SchemaScriptsDto, SchemasDto, SchemasService, ScriptCompletions, StringFieldPropertiesDto, SynchronizeSchemaDto, TagsFieldPropertiesDto, UpdateFieldDto, UpdateSchemaDto, VersionTag } from '@app/shared/internal';
+import { environment } from 'src/environments/environment';
 
 describe('SchemasService', () => {
     const version = new VersionTag('1');
@@ -20,7 +21,7 @@ describe('SchemasService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 SchemasService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

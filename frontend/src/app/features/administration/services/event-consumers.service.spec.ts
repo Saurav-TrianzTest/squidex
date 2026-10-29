@@ -11,6 +11,7 @@ import { inject, TestBed } from '@angular/core/testing';
 import { ApiUrlConfig, EventConsumerDto, EventConsumersDto } from '@app/shared';
 import { IResourceDto, ResourceLinkDto } from '@app/shared/model';
 import { EventConsumersService } from './event-consumers.service';
+import { environment } from 'src/environments/environment';
 
 describe('EventConsumersService', () => {
     beforeEach(() => {
@@ -20,7 +21,7 @@ describe('EventConsumersService', () => {
                 provideHttpClient(withInterceptorsFromDi()),
                 provideHttpClientTesting(),
                 EventConsumersService,
-                { provide: ApiUrlConfig, useValue: new ApiUrlConfig('http://service/p/') },
+                { provide: ApiUrlConfig, useValue: new ApiUrlConfig(environment.apiUrl || 'http://service/p/') as ApiUrlConfig },
             ],
         });
     });

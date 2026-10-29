@@ -300,7 +300,7 @@ public sealed class AppsController(ICommandBus commandBus, IAppProvider appProvi
     {
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<App>();
+        var result = await context.ResultAsync<App>();
         var response = converter(result);
 
         return response;

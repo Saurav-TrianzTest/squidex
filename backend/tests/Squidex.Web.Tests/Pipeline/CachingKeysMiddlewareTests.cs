@@ -49,7 +49,7 @@ public class CachingKeysMiddlewareTests
             {
                 foreach (var (state, callback) in callbacks)
                 {
-                    callback(state).Wait(httpContext.RequestAborted);
+                    callback(state).GetAwaiter().GetResult(httpContext.RequestAborted);
                 }
             });
 

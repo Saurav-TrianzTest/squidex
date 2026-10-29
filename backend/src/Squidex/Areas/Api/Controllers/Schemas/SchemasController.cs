@@ -425,7 +425,7 @@ public sealed class SchemasController(
     {
         var context = await CommandBus.PublishAsync(command, HttpContext.RequestAborted);
 
-        var result = context.Result<Schema>();
+        var result = await context.ResultAsync<Schema>();
         var response = SchemaDto.FromDomain(result, Resources);
 
         return response;

@@ -42,7 +42,7 @@ describe('MustBeAuthenticatedGuard', () => {
                 },
                 {
                     provide: UIOptions,
-                    useValue: uiOptions,
+                    useValue: uiOptions as unknown as UIOptions,
                 },
             ],
         });

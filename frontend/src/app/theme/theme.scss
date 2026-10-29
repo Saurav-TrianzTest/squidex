@@ -9,6 +9,11 @@
 // Icomoon
 @import 'icomoon/style';
 
+// AWS CloudFront CDN configuration:
+// CSS is bundled and minified by Angular build pipeline, then served via S3 + CloudFront.
+// The build output (styles.[hash].css) is uploaded to S3 with long cache headers.
+// CloudFront distribution with HTTP/2 enabled serves the bundled CSS globally.
+
 // GraphiQL
 @import 'graphiql/graphiql.css';
 

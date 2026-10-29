@@ -12,10 +12,10 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { AppsState, UIState } from '@app/shared/internal';
 
 export const appMustExistGuard = (route: ActivatedRouteSnapshot) => {
-    const appsState = inject(AppsState);
+    const appsState = inject<AppsState>(AppsState);
     const appName = route.params['appName'];
-    const router = inject(Router);
-    const uiState = inject(UIState);
+    const router = inject<Router>(Router);
+    const uiState = inject<UIState>(UIState);
 
     const result =
         appsState.select(appName).pipe(

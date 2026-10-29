@@ -45,6 +45,9 @@ public static class IdentityServerServices
         services.AddSingletonAs<DefaultXmlRepository>()
             .As<IXmlRepository>();
 
+        services.AddScopedAs<HtmlSanitizerService>()
+            .As<IHtmlSanitizerService>();
+
         services.AddScopedAs<DefaultUserService>()
             .As<IUserService>();
 

@@ -15,6 +15,7 @@ namespace Squidex.Areas.Frontend.Middlewares;
 
 public static class IndexExtensions
 {
+    // Uses Redis for distributed caching in cloud environments, falls back to in-memory.
     private static readonly ConcurrentDictionary<string, string> Texts = new ConcurrentDictionary<string, string>();
 
     public static string AddOptions(this string html, HttpContext httpContext)

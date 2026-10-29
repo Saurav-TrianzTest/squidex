@@ -41,7 +41,7 @@ describe('ModalDirective', () => {
         TestBed.configureTestingModule({
             imports: [TestHostComponent],
             providers: [
-                { provide: RootViewComponent, useValue: {} },
+                { provide: RootViewComponent, useValue: {} as RootViewComponent },
             ],
         });
 
@@ -50,7 +50,7 @@ describe('ModalDirective', () => {
         fixture.detectChanges();
 
         host = fixture.componentInstance;
-        modalService = TestBed.inject(ModalService);
+        modalService = TestBed.inject<ModalService>(ModalService);
 
         host.dialog1.show();
         host.dialog2.show();

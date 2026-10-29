@@ -23,7 +23,7 @@ public abstract class MongoRepositoryBase<T> : MongoBase<T>, IInitializable
         {
             if (mongoCollection == null)
             {
-                InitializeAsync(default).Wait();
+                InitializeAsync(default).GetAwaiter().GetResult();
             }
 
             if (mongoCollection == null)
