@@ -18,11 +18,12 @@ public sealed class MySqlContentDbContextDesignTimeFactory : IDesignTimeDbContex
 {
     public MySqlContentDbContext CreateDbContext(string[] args)
     {
-        const string ConnectionString = "Server=localhost;Port=33060;Database=test;User=mysql;Password=mysql";
+        var connectionString = Environment.GetEnvironmentVariable("Database__ConnectionString")
+            ?? throw new InvalidOperationException("Database__ConnectionString environment variable is required for design-time configuration.");
 
         var builder = new DbContextOptionsBuilder<MySqlAppDbContext>()
             .UsePrefix(string.Empty)
-            .UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString), options =>
+            .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), options =>
             {
                 options.UseNetTopologySuite();
             });

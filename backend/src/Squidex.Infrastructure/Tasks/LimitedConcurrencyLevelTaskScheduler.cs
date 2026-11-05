@@ -9,8 +9,7 @@ namespace Squidex.Infrastructure.Tasks;
 
 internal sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
 {
-    [ThreadStatic]
-    private static bool currentThreadIsProcessingItems;
+    private static readonly AsyncLocal<bool> currentThreadIsProcessingItems = new();
     private readonly LinkedList<Task> tasks = new LinkedList<Task>();
     private readonly int maxDegreeOfParallelism;
     private int delegatesQueuedOrRunning;
@@ -43,7 +42,7 @@ internal sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
     {
         ThreadPool.UnsafeQueueUserWorkItem(_ =>
         {
-            currentThreadIsProcessingItems = true;
+            currentThreadIsProcessingItems.Value = true;
             try
             {
                 while (true)
@@ -70,7 +69,7 @@ internal sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
             }
             finally
             {
-                currentThreadIsProcessingItems = false;
+                currentThreadIsProcessingItems.Value = false;
             }
         }, null);
     }
@@ -78,7 +77,7 @@ internal sealed class LimitedConcurrencyLevelTaskScheduler : TaskScheduler
     protected override bool TryExecuteTaskInline(Task task, bool taskWasPreviouslyQueued)
     {
         // If this thread isn't already processing a task, we don't support inlining
-        if (!currentThreadIsProcessingItems)
+        if (!currentThreadIsProcessingItems.Value)
         {
             return false;
         }

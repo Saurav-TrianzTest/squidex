@@ -18,11 +18,12 @@ public sealed class SqlServerContentDbContextDesignTimeFactory : IDesignTimeDbCo
 {
     public SqlServerContentDbContext CreateDbContext(string[] args)
     {
-        const string ConnectionString = "Server=localhost;Port=14330;Database=test;User=sa;Password=sqlserver";
+        var connectionString = Environment.GetEnvironmentVariable("Database__ConnectionString")
+            ?? throw new InvalidOperationException("Database__ConnectionString environment variable is required for design-time configuration.");
 
         var builder = new DbContextOptionsBuilder<SqlServerAppDbContext>()
             .UsePrefix(string.Empty)
-            .UseSqlServer(ConnectionString, options =>
+            .UseSqlServer(connectionString, options =>
             {
                 options.UseNetTopologySuite();
             });

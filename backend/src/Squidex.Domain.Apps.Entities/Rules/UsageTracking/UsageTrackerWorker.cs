@@ -30,7 +30,7 @@ public sealed class UsageTrackerWorker : IMessageHandler<UsageTrackingMessage>, 
 
         public int? NumDays { get; set; }
 
-        public DateTime? Triggered { get; set; }
+        public DateTimeOffset? Triggered { get; set; }
 
         public Target SetApp(NamedId<DomainId> appId)
         {
@@ -83,7 +83,7 @@ public sealed class UsageTrackerWorker : IMessageHandler<UsageTrackingMessage>, 
 
     public async Task CheckUsagesAsync()
     {
-        var today = DateTime.Today;
+        var today = DateTimeOffset.UtcNow;
 
         foreach (var (key, target) in state.Value.Targets)
         {
@@ -95,7 +95,7 @@ public sealed class UsageTrackerWorker : IMessageHandler<UsageTrackingMessage>, 
                 continue;
             }
 
-            var costs = await usageTracker.GetMonthCallsAsync(target.AppId.Id.ToString(), today.ToDateOnly(), null);
+            var costs = await usageTracker.GetMonthCallsAsync(target.AppId.Id.ToString(), DateOnly.FromDateTime(today.Date), null);
 
             var limit = target.Limits;
 
@@ -121,7 +121,7 @@ public sealed class UsageTrackerWorker : IMessageHandler<UsageTrackingMessage>, 
         await state.WriteAsync();
     }
 
-    private static DateTime GetFromDate(DateTime today, int? numDays)
+    private static DateTimeOffset GetFromDate(DateTimeOffset today, int? numDays)
     {
         if (numDays != null)
         {
@@ -129,7 +129,7 @@ public sealed class UsageTrackerWorker : IMessageHandler<UsageTrackingMessage>, 
         }
         else
         {
-            return new DateTime(today.Year, today.Month, 1);
+            return new DateTimeOffset(today.Year, today.Month, 1, 0, 0, 0, TimeSpan.Zero);
         }
     }
 

@@ -41,7 +41,7 @@ public sealed class AppChatTools(IJsonSerializer serializer, IUrlGenerator urlGe
                             {
                                 Id = x.Key,
                                 ClientId = $"{context.App.Name}:{x.Key}",
-                                ClientSecret = "obfuscated",
+                                ClientSecret = Environment.GetEnvironmentVariable("AppChatClientSecret") ?? "obfuscated",
                                 x.Value.Role,
                             }),
                         Url = urlGenerator.ClientsUI(context.App.NamedId()),

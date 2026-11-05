@@ -86,6 +86,13 @@ public sealed class Startup(IConfiguration config)
         app.UseSquidexHealthCheck();
         app.UseSquidexRobotsTxt();
 
+        app.Use(async (context, next) =>
+        {
+            context.Response.Headers.Append("Content-Security-Policy",
+                "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'");
+            await next();
+        });
+
         app.UseOpenApi(options =>
         {
             options.Path = "/api/swagger/v1/swagger.json";

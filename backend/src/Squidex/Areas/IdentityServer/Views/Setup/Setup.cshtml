@@ -1,4 +1,6 @@
 ﻿@model Squidex.Areas.IdentityServer.Controllers.Setup.SetupVM
+@using Squidex.Web
+@inject IHtmlSanitizerService HtmlSanitizer
 
 @{
     ViewBag.Title = T.Get("setup.title");
@@ -14,7 +16,7 @@
 
             <div class="col">
                 <div>
-                    @Html.Raw(message)
+                    @HtmlSanitizer.Sanitize(message)
                 </div>
             </div>
         </div>
@@ -31,7 +33,7 @@
 
             <div class="col">
                 <div>
-                    <strong>@T.Get("common.critical")</strong>: @Html.Raw(message)
+                    <strong>@T.Get("common.critical")</strong>: @HtmlSanitizer.Sanitize(message)
                 </div>
             </div>
         </div>
@@ -48,7 +50,7 @@
 
             <div class="col">
                 <div>
-                    <strong>@T.Get("common.warning")</strong>: @Html.Raw(message)
+                    <strong>@T.Get("common.warning")</strong>: @HtmlSanitizer.Sanitize(message)
                 </div>
             </div>
         </div>

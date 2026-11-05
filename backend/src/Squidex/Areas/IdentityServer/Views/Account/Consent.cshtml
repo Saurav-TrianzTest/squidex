@@ -1,4 +1,6 @@
 ﻿@model Squidex.Areas.IdentityServer.Controllers.Account.ConsentVM
+@using Squidex.Web
+@inject IHtmlSanitizerService HtmlSanitizer
 
 @{
     ViewBag.Title = T.Get("users.consent.title");
@@ -26,7 +28,7 @@
                         <input type="checkbox" id="consentToAutomatedEmails" name="consentToAutomatedEmails" value="True" />
                     </div>
                     <div class="col">
-                        @Html.Raw(T.Get("users.consent.emailText"))
+                        @HtmlSanitizer.Sanitize(T.Get("users.consent.emailText"))
                     </div>
                 </div>
             </div>
@@ -43,7 +45,7 @@
                         <input type="checkbox" id="consentToCookies" name="consentToCookies" value="True" />
                     </div>
                     <div class="col">
-                        @Html.Raw(T.Get("users.consent.cookiesText", new { privacyUrl = Model.PrivacyUrl }))
+                        @HtmlSanitizer.Sanitize(T.Get("users.consent.cookiesText", new { privacyUrl = Model.PrivacyUrl }))
                     </div>
                 </div>
             </div>
@@ -60,7 +62,7 @@
                         <input type="checkbox" id="consentToPersonalInformation" name="consentToPersonalInformation" value="True" />
                     </div>
                     <div class="col">
-                        @Html.Raw(T.Get("users.consent.piiText"))
+                        @HtmlSanitizer.Sanitize(T.Get("users.consent.piiText"))
                     </div>
                 </div>
             </div>

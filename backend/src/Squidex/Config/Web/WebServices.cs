@@ -34,6 +34,9 @@ public static class WebServices
         services.Configure<CompressionOptions>(config,
             "compression");
 
+        services.Configure<HtmlSanitizerOptions>(config,
+            "htmlSanitizer");
+
         services.AddSingletonAs(c => new ExposedValues(c.GetRequiredService<IOptions<ExposedConfiguration>>().Value, config, typeof(WebServices).Assembly))
             .AsSelf();
 
@@ -42,6 +45,9 @@ public static class WebServices
 
         services.AddSingletonAs<ApiCostsFilter>()
             .AsSelf();
+
+        services.AddSingletonAs<HtmlSanitizerService>()
+            .As<IHtmlSanitizerService>();
 
         services.AddSingletonAs<AppResolver>()
             .AsSelf();

@@ -15,7 +15,7 @@ public class BackgroundUsageTrackerTests
     private readonly CancellationToken ct;
     private readonly IUsageRepository usageStore = A.Fake<IUsageRepository>();
     private readonly string key = Guid.NewGuid().ToString();
-    private readonly DateOnly date = DateTime.Today.ToDateOnly();
+    private readonly DateOnly date = DateOnly.FromDateTime(DateTimeOffset.UtcNow.Date);
     private readonly BackgroundUsageTracker sut;
 
     public BackgroundUsageTrackerTests()

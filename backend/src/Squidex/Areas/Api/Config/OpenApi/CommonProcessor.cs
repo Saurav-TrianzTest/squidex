@@ -45,7 +45,7 @@ public sealed class CommonProcessor : IDocumentProcessor
 
         context.Document.ExternalDocumentation = new OpenApiExternalDocumentation
         {
-            Url = "https://docs.squidex.io",
+            Url = exposedValues.TryGetValue("docsUrl", out var docsUrl) && !string.IsNullOrWhiteSpace(docsUrl) ? docsUrl : "https://docs.squidex.io",
         };
     }
 }

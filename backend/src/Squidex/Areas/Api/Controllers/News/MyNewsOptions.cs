@@ -9,6 +9,8 @@ namespace Squidex.Areas.Api.Controllers.News;
 
 public sealed class MyNewsOptions
 {
+    public string Url { get; set; }
+
     public string AppName { get; set; }
 
     public string ClientId { get; set; }

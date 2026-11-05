@@ -18,11 +18,12 @@ public sealed class PostgresContentDbContextDesignTimeFactory : IDesignTimeDbCon
 {
     public PostgresContentDbContext CreateDbContext(string[] args)
     {
-        const string ConnectionString = "Server=localhost;Port=54320;Database=test;User=postgres;Password=postgres";
+        var connectionString = Environment.GetEnvironmentVariable("Database__ConnectionString")
+            ?? throw new InvalidOperationException("Database__ConnectionString environment variable is required for design-time configuration.");
 
         var builder = new DbContextOptionsBuilder<PostgresAppDbContext>()
             .UsePrefix(string.Empty)
-            .UseNpgsql(ConnectionString, options =>
+            .UseNpgsql(connectionString, options =>
             {
                 options.UseNetTopologySuite();
             });

@@ -15,6 +15,7 @@ public sealed class EmailPlugin : IPlugin
 {
     public void ConfigureServices(IServiceCollection services, IConfiguration config)
     {
+        services.AddAWSService<IAmazonSimpleEmailService>();
         services.AddFlowStep<EmailFlowStep>();
 #pragma warning disable CS0618 // Type or member is obsolete
         services.AddRuleAction<EmailAction>();

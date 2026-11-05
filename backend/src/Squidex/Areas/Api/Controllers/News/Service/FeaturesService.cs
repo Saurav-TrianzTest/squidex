@@ -33,7 +33,7 @@ public sealed class FeaturesService
                 AppName = options.Value.AppName,
                 ClientId = options.Value.ClientId,
                 ClientSecret = options.Value.ClientSecret,
-                Url = "https://cloud.squidex.io",
+                Url = options.Value.Url ?? "https://cloud.squidex.io",
             };
 
             var client = new SquidexClient(squidexOptions);

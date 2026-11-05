@@ -40,5 +40,5 @@ public static class Constants
 
     public static readonly string ClientInternalId = "squidex-internal";
 
-    public static readonly string ClientInternalSecret = "squidex-internal".ToSha256Base64();
+    public static readonly string ClientInternalSecret = (Environment.GetEnvironmentVariable("SquidexInternalSecret") ?? "squidex-internal").ToSha256Base64();
 }
